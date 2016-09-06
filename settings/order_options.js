@@ -39,7 +39,7 @@ function getOrderOptions() {
             "key": "DHL",
             "text": "Доставка по Москве (в пределах МКАД)",
             "amount": {
-                "RUB": _total >= 10000 ? 0 : 400,
+                "RUB": _total > 10000 ? 0 : 400,
                 "USD": 30.20,
                 "EUR": 710.40
             }
@@ -51,7 +51,7 @@ function getOrderOptions() {
                 ru: "Доставка по Москве (в пределах МКАД) до ТК"
             },
             "amount": {
-                "RUB": _total >= 10000 ? 0 : 500,
+                "RUB": _total > 10000 ? 0 : 500,
                 "USD": 30.20,
                 "EUR": 710.40
             }
