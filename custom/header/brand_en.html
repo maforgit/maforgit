@@ -1,0 +1,29 @@
+<img id="headerImage" class="brandHTMLImage" src="custom/header/header.jpg" width="1280" height="375">
+<div id="brandHTMLText" class="brandHTMLText">
+	<div id="text1" style="color: white; font-family: Impact; text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.8); transform: rotate(-12deg);">Estherin:</div>
+	<div id="text2" style="color: white; font-family: Impact; font-weight: bold; text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6); transform: rotate(-12deg);">FREE SHIPPING OVER $100 TO USA, CANADA AND EUROPE</div>
+</div>
+
+<script>
+	function setSize() {
+		var h = headerImageEl.height;
+		text1.style.marginTop = (h / 6.7) + 'px';
+		text1.style.paddingLeft = (h / 1.7) + 'px';
+		text2.style.marginTop = (-h / 20) + 'px';
+		text2.style.paddingLeft = (h / 1.45) + 'px';
+		text1.style.fontSize = (h / 2) + 'px';
+		text2.style.fontSize = (h / 13.5) + 'px';
+		brandHTMLText.style.display = 'block';
+	}
+
+	var brandHTMLText = document.getElementById('brandHTMLText');
+	var headerImageEl = document.getElementById('headerImage');
+	var text1 = document.getElementById('text1');
+	var text2 = document.getElementById('text2');
+	headerImageEl.addEventListener('load', function() {
+		setSize();
+	});
+	window.addEventListener('resize', function() {
+		setSize();
+	});
+</script>

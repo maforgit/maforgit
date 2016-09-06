@@ -1,0 +1,119 @@
+<!--
+email	Customer's email address
+first_name	Customer's first name. Must be alpha-numeric, with a 32 character limit
+last_name	Customer's last name. Must be alpha-numeric, with a 64 character limit
+address1	First line of customer's address. Must be alpha-numeric, with a 100 character limit
+address2	Second line of customer's address. Must be alpha-numeric, with a 100 character limit
+city	City of customer's address. Must be alpha-numeric, with a 100 character limit
+state	State of customer's address. Must be official 2 letter abbreviation
+zip	Zip code of customer's address
+night_phone_a	Area code of customer's night telephone number
+night_phone_b	First three digits of customer's night telephone number
+day_phone_a	Area code of customer's daytime telephone number
+day_phone_b	First three digits of customer's daytime telephone number
+-->
+<style>
+.deliveryOption {
+	d222isplay: block;
+	cursor: pointer;
+}
+
+.customerInputField {
+	width: 100%;
+	height: 25px;
+	border: 1px solid Orange;
+	border-radius: 2px;
+	margin-bottom: 15px;
+}
+
+.customerOptionsLabelTd {
+	white-space: nowrap;
+	vertical-align: top;
+	padding-right: 10px;
+}
+</style>
+<script>
+
+</script>
+<div style="font-family: Arial">
+	<br> <br>
+	<h3 id="chooseDeliveryMethod"></h3>
+	<br> <input id="delivery_FedEx" type="radio" name="deliveryServicesRadio" value="FedEx" onchange="_orderOptions=getOrderOptions();save('orderOptions', _orderOptions);redisplayOrderOptions();" checked>
+	<label id="deliveryOptionLabelFedEx" for="delivery_FedEx" class="deliveryOption"></label>
+	<br> <input id="delivery_DHL" type="radio" name="deliveryServicesRadio" value="DHL" onchange="_orderOptions=getOrderOptions();save('orderOptions', _orderOptions);redisplayOrderOptions();">
+	<label id="deliveryOptionLabelDHL" for="delivery_DHL" class="deliveryOption"></label>
+	<br> <br> <br>
+	<h3 id="customerData"></h3>
+	<br>
+	<table style="width: 100%; border-collapse: collapse;">
+		<tr>
+			<td class="customerOptionsLabelTd"><label id="customerNameLabel" for="customerName" class=""></label></td>
+			<td style="width: 100%;"><input type="text" id="customerName" class="customerInputField" oninput="_customerDetails=getOrderCustomerDetails();save('customerDetails', _customerDetails);redisplayOrderOptions();"></td>
+		</tr>
+		<tr>
+			<td class="customerOptionsLabelTd"><label id="customerPhoneLabel" for="customerPhone" class=""></label></td>
+			<td style="width: 100%;"><input type="text" id="customerPhone" class="customerInputField" oninput="_customerDetails=getOrderCustomerDetails();save('customerDetails', _customerDetails);redisplayOrderOptions();"></td>
+		</tr>
+		<tr>
+			<td class="customerOptionsLabelTd"><label id="customerEmailLabel" for="customerEmail" class=""></label></td>
+			<td style="width: 100%;"><input type="email" id="customerEmail" class="customerInputField" oninput="_customerDetails=getOrderCustomerDetails();save('customerDetails', _customerDetails);redisplayOrderOptions();"></td>
+		</tr>
+		<tr>
+			<td class="customerOptionsLabelTd"><label id="customerAddressLabel" for="customerAddress" class=""></label></td>
+			<td style="width: 100%;"><input type="text" id="customerAddress" class="customerInputField" oninput="_customerDetails=getOrderCustomerDetails();save('customerDetails', _customerDetails);redisplayOrderOptions();"></td>
+		</tr>
+	</table>
+</div>
+<script>
+	//
+	txt(byId('chooseDeliveryMethod'), {
+		text : {
+			en : 'Choose delivery:',
+			ru : 'Укажите вид доставки:'
+		}
+	}, 'text');
+	//
+	txt(byId('customerData'), {
+		text : {
+			en : 'Customer Data:',
+			ru : 'Укажите Ваши данные:'
+		}
+	}, 'text');
+	//
+	txt(byId('deliveryOptionLabelFedEx'), {
+		text : {
+			en : "FedEx delivery",
+			ru : "FedEx доставка"
+		}
+	}, 'text');
+	txt(byId('deliveryOptionLabelDHL'), {
+		text : {
+			en : "DHL delivery",
+			ru : "DHL доставка"
+		}
+	}, 'text');
+	//
+	if (_customerDetails == null)
+		_customerDetails = getOrderCustomerDetails();
+	//
+	byId('customerNameLabel').innerHTML = getText(_customerDetails[0], 'text');
+	byId('customerPhoneLabel').innerHTML = getText(_customerDetails[1], 'text');
+	byId('customerEmailLabel').innerHTML = getText(_customerDetails[2], 'text');
+	byId('customerAddressLabel').innerHTML = getText(_customerDetails[3], 'text');
+	//
+	byId('customerName').value = getText(_customerDetails[0], 'value');
+	byId('customerPhone').value = getText(_customerDetails[1], 'value');
+	byId('customerEmail').value = getText(_customerDetails[2], 'value');
+	byId('customerAddress').value = getText(_customerDetails[3], 'value');
+	//
+	if (_orderOptions == null)
+		_orderOptions = getOrderOptions();
+	//
+	var key = _orderOptions[2]['key'];
+	if (key == 'FedEx')
+		byId('delivery_FedEx').checked = true;
+	else if (key == 'DHL')
+		byId('delivery_DHL').checked = true;
+	//
+	redisplayOrderOptions();
+</script>

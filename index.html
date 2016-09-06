@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<!--
+To run locally in Chrome: --allow-file-access-from-files
+To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy = false
+ -->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link id="favicon" rel="icon">
+
+<link rel="stylesheet/less" href="assets/grid12.css">
+<link rel="stylesheet/less" href="assets/style.css" />
+<link rel="stylesheet/less" href="custom.css">
+
+<script>
+	less = {
+		strictMath : true
+	};
+</script>
+<link rel="stylesheet" href="assets/zoom/css/magnify.css">
+<script src="assets/less.min.js" type="text/javascript"></script>
+<script src="assets/jquery-3.0.0.min.js"></script>
+<script src="assets/zoom/js/jquery.magnify.js"></script>
+<script src="assets/lz-string.min.js"></script>
+<script src="assets/common-utils.js"></script>
+<script src="assets/resource-utils.js"></script>
+<script src="settings/color_list.js"></script>
+<script src="settings/layout.js"></script>
+<script src="settings/colors.js"></script>
+<script src="settings/fonts.js"></script>
+<script src="settings/currencies.js"></script>
+<script src="settings/currencies_symbols.js"></script>
+<script src="settings/languages.js"></script>
+<script src="settings/item_options_values.js"></script>
+<script src="settings/item_options.js"></script>
+<script src="settings/order_store_details.js"></script>
+<script src="settings/order_customer_details.js"></script>
+<script src="settings/order_options.js"></script>
+<script src="settings/resources.js"></script>
+<script src="settings/sections.js"></script>
+<script src="settings/payment_service_providers.js"></script>
+<script src="settings/items.js"></script>
+<script src="settings/item-filter.js"></script>
+</head>
+<body onresize="onResizeHandler()">
+	<img id="loading" width="600px" height="600px" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);" src="assets/loading.gif">
+	<!-- ---------------------------------------------------------------------------------------- -->
+	<div hidden id="htmlBlocksContainer">
+		<section id="section">
+			<div style="padding-top: 20px;"></div>
+			<div class="sectionHeader effect2">
+				<div class="sectionNameAndDescription">
+					<h1 class="sectionName"></h1>
+					<h2 class="sectionDescription"></h2>
+				</div>
+				<div class="prevNextBlock noPrint">
+					<div class="buttonPrevNext buttonPrev"></div>
+					<div class="buttonPrevNext buttonNext"></div>
+				</div>
+			</div>
+			<div class="sectionBodyHeader sectionBodyText"></div>
+			<div class="sectionBody"></div>
+			<div class="sectionBodyFooter sectionBodyText"></div>
+		</section>
+
+		<section id="itemCardHTML">
+			<div class="itemCard effect2">
+				<div class="ribbon-wrapper ribbon-wrapper-left" style="display: none;">
+					<div class="ribbon ribbon-left">-30%</div>
+				</div>
+				<div class="ribbon-wrapper ribbon-wrapper-right" style="display: none;">
+					<div class="ribbon ribbon-right">-30%</div>
+				</div>
+				<h3 class="productName"></h3>
+
+				${extra}
+
+				<div class="inCart noSelect bottomIcon">
+					<span class="cartChr fontawesome20px"></span><span class="badge"></span>
+				</div>
+				<div class="priceHolder">
+					<span class="oldPrice" style="text-decoration: line-through;"></span> <span class="productPrice"></span>
+				</div>
+			</div>
+		</section>
+
+		<section id="thumbnailExtraHTML">
+			<div class="thumbnailImagePlace">
+				<img class="itemImage" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+				<div class="stampHolder noSelect"></div>
+			</div>
+			<div class="vertical"></div>
+		</section>
+
+		<section id="productPageExtraHTML">
+			<div class="container productPageContainer">
+				<div class="row">
+					<div class="col-6 productPageCol noSelect">
+						<div>
+							<img class="itemImage" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+							<div class="stampHolder noSelect"></div>
+						</div>
+						<div class="imgThumbsHolder"></div>
+					</div>
+					<div class="col-6 productPageCol">
+						<h3 class="productNameBig"></h3>
+						<div class="productLongName"></div>
+						<div class="productDescription" style="padding-bottom: 40px;"></div>
+						<table class="productDataSheet" style="display: none; padding-bottom: 40px;"></table>
+						<div class="colorAndSizeTableTitle"></div>
+						<div style="padding-bottom: 10px;"></div>
+						<table class="colorAndSizeTable" style="width: 100%; display: none;">
+						</table>
+						<div style="padding-bottom: 40px;"></div>
+						<div class="info"></div>
+						<form class="addToCart">
+							<table class="buttonAddToCart noSelect">
+								<tr>
+									<td class="buttonAddToCartText"></td>
+									<td class="buttonAddToCartIcon fontawesome20px"></td>
+								</tr>
+							</table>
+							<div class="quantityBlock">
+								<input type="button" value="−" class="quantityMinus" onclick="simpleClickPlusMinusHandler(event, -1)"> <input type="number" step="1" min="1" class="addToCartCountInput" onkeydown="if(event.keyCode == 109 || event.keyCode == 189) event.preventDefault()" onchange="addToCartCountInputHandler(event)"> <input type="button" value="+" class="quantityPlus" onclick="simpleClickPlusMinusHandler(event, +1)">
+							</div>
+						</form>
+						<div class="instancesHolder" style="display: none;">
+							<div style="padding-bottom: 40px;"></div>
+							<div class="instancesListTitle"></div>
+							<div style="padding-bottom: 10px;"></div>
+							<table style="width: 100%; border-collapse: collapse; color: #666; font-family: monospace;">
+								<thead style="background: #eee; border: 1px solid #ccc;">
+									<tr style="height: 30px;">
+										<th style="text-align: left; width: 30px; border-left: 1px solid transparent; border-top: 1px solid transparent; border-right: 1px solid #ccc; padding: 5px; background: #fff;"><span class="deleteAllItemInstances noPrint quantitySign fontawesome20px"></span></th>
+										<th class="thInstanceColumnOptions" style="border-right: 1px solid #ccc; text-align: center;">OPTIONS</th>
+										<th style="width: 100px; border-right: 1px solid #ccc; text-align: center;"><span class="thInstanceColumnPrice">PRICE</span>, <span class="currencySymbol"></span></th>
+										<th class="thInstanceColumnQuantity" style="width: 100px; border-right: 1px solid #ccc; text-align: center;">QTY</th>
+										<th style="width: 100px; text-align: center;"><span class="thInstanceColumnTotal">TOTAL</span>, <span class="currencySymbol"></span></th>
+									</tr>
+								</thead>
+								<tbody class="instancesTbody" style="border-right: 1px solid #ccc;">
+								</tbody>
+								<tfoot>
+									<tr id="instancesTotalTr" style="border-top: 1px solid #ccc;">
+										<td class="instancesTotalOptions" colspan="3" style="border: 0"></td>
+										<td class="instancesTotalQuantity" style="text-align: right; border: 1px solid #ccc; font-weight: bold; padding: 5px;"><span class="instancesTotalQuantity"></span></td>
+										<td class="instancesTotal" style="border: 1px solid #ccc; text-align: right; font-weight: bold; padding: 5px;"></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="block_order">
+			<div id="deliveryOptions"></div>
+			<div id="orderHolder">
+				<br> <br>
+				<div class="dashedLine noPrint"></div>
+				<div class="fontawesome20px order_cutter noPrint">&#xf0c4;</div>
+				<div style="margin-top: 20px;"></div>
+				<div id="order" style="font-family: monospace;">
+					<table style="float: left; border-collapse: collapse;">
+						<tr>
+							<td colspan="2"></td>
+						</tr>
+						<tr>
+							<td id="textOrderTitle" style="text-align: center;">Order No.</td>
+							<td id="orderNo" style="font-weight: bold; padding-left: 3px; padding-right: 3px; border: 1px solid #000;"></td>
+						</tr>
+					</table>
+					<table style="float: right; border-collapse: collapse;">
+						<tr>
+							<td></td>
+							<td id="textOrderDateYYYY" style="text-align: center;">YYYY</td>
+							<td id="textOrderDateMM" style="text-align: center;">MM</td>
+							<td id="textOrderDateDD" style="text-align: center;">DD</td>
+						</tr>
+						<tr>
+							<td id="textOrderDate">Date:</td>
+							<td id="orderDateYYYY" style="font-weight: bold; padding-left: 3px; padding-right: 3px; border: 1px solid #000;"></td>
+							<td id="orderDateMM" style="font-weight: bold; padding-left: 3px; padding-right: 3px; border: 1px solid #000;"></td>
+							<td id="orderDateDD" style="font-weight: bold; padding-left: 3px; padding-right: 3px; border: 1px solid #000;"></td>
+						</tr>
+					</table>
+					<div style="padding-bottom: 70px;"></div>
+					<table style="border-collapse: collapse; width: 100%;">
+						<tbody id="customerDetailsTbody">
+						</tbody>
+					</table>
+					<div style="padding-bottom: 50px;"></div>
+					<table style="width: 100%; border-collapse: collapse; color: #000;">
+						<thead style="background: #eee; border: 2px solid #000;">
+							<tr style="height: 30px;">
+								<th style="text-align: left; width: 30px; border-right: 2px solid #000; border-left: 2px solid transparent; border-top: 2px solid transparent; background: #fff; padding: 5px;"><span id="deleteAllOrderItems" class="noPrint quantitySign fontawesome20px"></span></th>
+								<th id="textOrderColumnImage"></th>
+								<th id="textOrderColumnProduct" style="border-right: 1px solid #ccc;">PRODUCT</th>
+								<th style="border-right: 1px solid #ccc; width: 100px;"><span id="textOrderColumnUnitPrice">UNIT PRICE</span>, <span class="currencySymbol"></span></th>
+								<th id="textOrderColumnQuantity" style="border-right: 1px solid #ccc; width: 100px;">QTY</th>
+								<th style="border-right: 2px solid #000; width: 100px;"><span id="textOrderColumnTotal">TOTAL</span>, <span class="currencySymbol"></span></th>
+							</tr>
+						</thead>
+						<tbody id="orderTbody" style="border-right: 2px solid #000;">
+						</tbody>
+						<tfoot>
+							<tr>
+								<td id="orderSpan" colspan="4" style="border-left: 0 solid; border-bottom: 2px solid #000; padding: 5px;"></td>
+								<td id="orderTotalQuantity" style="font-weight: bold; border: 2px solid #000; text-align: right; padding: 5px;"></td>
+								<td id="orderTotal" style="font-weight: bold; border: 2px solid #000; text-align: right; padding: 5px;"></td>
+							</tr>
+							<tr id="checkoutTotalTr">
+								<td id="textOrderTotal" style="font-weight: bold; border-top: 2px solid #000; text-align: right; padding: 5px;" colspan="5">Total:</td>
+								<td id="checkoutTotal" style="font-weight: bold; border: 4px solid #000; text-align: right; padding: 5px;"></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div style="margin-bottom: 100px;"></div>
+				<div class="dashedLine noPrint"></div>
+				<div class="fontawesome20px order_cutter order_cutter_mirror noPrint">&#xf0c4;</div>
+				<br>
+				<button class="printButton noPrint" onclick="copyLinkToOrder()" style="margin-right: 0;">
+					<span id="iconLink" class="fontawesome20px"></span>&nbsp;<span id="copyLinkToOrderText"></span>
+				</button>
+				<button class="printButton noPrint" onclick="printOrder()" style="margin-right: 10px;">
+					<span id="iconPrint" class="fontawesome20px"></span>&nbsp;<span id="printButtonText"></span>
+				</button>
+				<div style="margin-top: 40px; font-family: monospace;"">
+					<div style="padding-bottom: 5px;">
+						<span id="iconFolder" class="fontawesome20px" style="margin-right: 5px;"></span><span id="textFiles"></span>
+					</div>
+					<table style="">
+						<tr>
+							<td id="iconFileDownloadOrder" class="fontawesome20px" style="padding-left: 25px;"></td>
+							<td id="linkDownloadOrder" class="fileLink" onclick="downloadOrder()"></td>
+							<td id="textDownloadOrder"></td>
+						</tr>
+
+						<tr>
+							<td id="iconFileDownloadQuantityReport" class="fontawesome20px" style="padding-left: 25px;"></td>
+							<td id="linkDownloadQuantityReport" class="fileLink" onclick="downloadSuppliersOrders()"></td>
+							<td id="textDownloadQuantityReport"></td>
+						</tr>
+
+						<tr>
+							<td id="iconFileDownloadShortcutToOrder" class="fontawesome20px" style="padding-left: 25px;"></td>
+							<td id="linkDownloadShortcutToOrder" class="fileLink" onclick="downloadShortcutToOrder()"></td>
+							<td id="textDownloadShortcutToOrder"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section id="block_checkout">
+			<div id="checkoutOptions"></div>
+			<br> <br>
+			<form id="checkoutForm" method="post" target="_blank">
+				<table class="buttonCheckout noSelect">
+					<tr>
+						<td><strong id="buttonCheckoutTitle"></strong><br> <span id="buttonCheckoutDetails"></span></td>
+						<td id="buttonCheckoutPrice"></td>
+						<td>&rsaquo;</td>
+					</tr>
+				</table>
+			</form>
+		</section>
+	</div>
+	<!-- ----------------------------------------------------------------------------------------------------- -->
+	<div id="site" style="display: none;">
+		<div id="header" class="header">
+			<div class="container headerContainer">
+				<div id="headerBarTop" class="row noPrint" style="display: none;">
+					<div class="col-12 headerCol">
+						<div id="menuChooser" class="headerText menuHolder" style="float: left;"></div>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 45px;">
+					<div id="brandHTMLHolder" class="col-12 headerCol12"></div>
+				</div>
+				<div id="headerBarBottom" class="row" style="display: none;">
+					<div class="col-7 headerCol">
+						<div id="langChooser" class="headerText" style="display: none; visibility: hidden;"></div>
+					</div>
+					<div class="col-5 headerCol">
+						<div id="currencyChooser" class="headerText headerRight" style="display: none; visibility: hidden;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="products" class="products"></div>
+		<div id="footer" class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div id="footerContentHolder"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="itemsHtmlHolder" hidden></div>
+</body>
+<script src="assets/utils.js"></script>
+</html>

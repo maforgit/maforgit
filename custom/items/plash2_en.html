@@ -1,0 +1,373 @@
+<style>
+.optionsPanel {
+	font-family: Lato-Light;
+	padding-left: 5px;
+}
+
+.optionsHeader {
+	font-family: Arial;
+	margin-bottom: 10px;
+}
+
+.option {
+	display: inline-block;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	border: 3px solid;
+	border-color: #fff;
+	outline-offset: -4px;
+}
+
+.optionActive {
+	cursor: default !important;
+	box-shadow: 0 0 0 4px orange !important;
+}
+
+.optionAvailable {
+	cursor: pointer;
+	outline: 1px solid;
+	box-shadow: 0 0 0 1px #999;
+}
+
+.optionAvailable:hover {
+	box-shadow: 0 0 0 1px orange;
+}
+
+.optionUnAvailable {
+	cursor: default;
+	outline: 1px solid;
+	box-shadow: 0 0 0 1px #eee;
+	color: #eee;
+}
+
+.colorOption {
+	width: 20px;
+	height: 20px;
+}
+
+.sizeOption {
+	display: inline-block;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	font-family: monospace;
+	text-align: center;
+	height: 20px;
+	line-height: 20px;
+	width: 40px;
+}
+
+.sizeOptionActive {
+	cursor: default !important;
+	box-shadow: 0 0 0 4px orange !important;
+	color: black !important;
+}
+
+.sizeOptionAvailable {
+	cursor: pointer;
+	box-shadow: 0 0 0 1px #000;
+	color: #000;
+}
+
+.sizeOptionAvailable:hover {
+	box-shadow: 0 0 0 1px orange;
+	color: orange;
+}
+
+.sizeOptionUnAvailable {
+	cursor: default;
+	box-shadow: 0 0 0 1px #ddd;
+	color: #ddd;
+}
+
+p {
+	text-indent: 30px;
+	text-align: justify;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.dataSheetTd_1 {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	border-top: 1px solid #aaa;
+	vertical-align: top;
+	border-right: 1px solid #aaa;
+}
+
+.dataSheetTd_2 {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	border-top: 1px solid #aaa;
+	vertical-align: top;
+}
+
+.productDataSheet {
+	width: 100%;
+}
+</style>
+
+
+<div id="itemContent.%1.%2.%3" class="optionsPanel">
+	<!-- 	<div class="itemLongName"></div> -->
+	<p id="itemDescription.%1.%2.%3"></p>
+	<br>
+	<div id="itemDescription.dop_info.%1.%2.%3" class="optionsHeader" data-translate='"ru": "Дополнительная информация:"'></div>
+	<script>
+		translate(byId("itemDescription.dop_info.%1.%2.%3"))
+	</script>
+	<table class="productDataSheet">
+	</table>
+	<br>
+	<div class="colorOptions">
+		<div id='%1.%2.colorOptions.colorsHeader' class="optionsHeader"></div>
+		<div class="optionsHolder"></div>
+	</div>
+	<div style="margin-bottom: 5px;"></div>
+	<div class="sizeOptions">
+		<div id='%1.%2.sizeOptions.sizeHeader' class="optionsHeader"></div>
+		<div class="optionsHolder"></div>
+	</div>
+</div>
+<script>
+
+// 	function displaySizeOptions(parentEl) {
+// 		var sizeOptionsEl = parentEl.getElementsByClassName('sizeOptions')[0];
+// 		var sizeOptionsHeaderEl = sizeOptionsEl.getElementsByClassName('optionsHeader')[0];
+// 		txt(sizeOptionsHeaderEl, {
+// 			text : {
+// 				en : 'Size:',
+// 				fr : 'Size:',
+// 				ru : 'Размер:'
+// 			}
+// 		}, 'text');
+// 		//
+// 		var item = _items['%1'];
+// 		var opts = item['optionsVariants']['size'];
+// 		var options = item['options'];
+// 		var selectedOption = options['size'];
+// 		//
+// 		parentEl.appendChild(sizeOptionsHeaderEl);
+// 		//
+// 		var sizesHolderEl = document.createElement('div');
+// 		parentEl.appendChild(sizesHolderEl);
+// 		//
+// 		var defaultOpt = selectedOption;
+// 		for ( var opt in opts) {
+// 			if (!opts.hasOwnProperty(opt))
+// 				continue;
+// 			//
+// 			var available = opts[opt]['available'];
+// 			//
+// 			if (defaultOpt === null || defaultOpt === undefined)
+// 				if (available) {
+// 					defaultOpt = opt;
+// 					item['options']['size'] = defaultOpt;
+// 					selectedOption = defaultOpt;
+// 				}
+// 			//
+// 			var optionEl = document.createElement('div');
+// 			sizesHolderEl.appendChild(optionEl);
+// 			optionEl.classList.add('noSelect');
+// 			optionEl.classList.add('sizeOption');
+// 			if (available)
+// 				optionEl.classList.add('sizeOptionAvailable');
+// 			else
+// 				optionEl.classList.add('sizeOptionUnAvailable');
+// 			if (selectedOption === opt)
+// 				optionEl.classList.add('sizeOptionActive');
+// 			optionEl.setAttribute('data-optionvalue', opt);
+// 			optionEl.innerHTML = opt;
+// 			optionEl.onclick = function(event) {
+// 				var el = event.target;
+// 				var opt = el.dataset.optionvalue;
+// 				var available = opts[opt]['available'];
+// 				if (!available)
+// 					return;
+// 				//
+// 				item['options']['size'] = opt;
+// 				//
+// 				var children = el.parentElement.children;
+// 				for (var i = 0; i < children.length; i++) {
+// 					var child = children[i];
+// 					child.classList.remove('sizeOptionActive');
+// 				}
+// 				el.classList.add('sizeOptionActive');
+// 				updateOptionableNumAll();
+// 				//
+// 				displayDataSheetent(parentEl);
+// 			};
+// 		}
+// 	}
+// 	//
+// 	function displayColorOptions(parentEl) {
+// 		var colorOptionsEl = parentEl.getElementsByClassName('colorOptions')[0];
+// 		var colorOptionsHeaderEl = colorOptionsEl.getElementsByClassName('optionsHeader')[0];
+// 		txt(colorOptionsHeaderEl, {
+// 			text : {
+// 				en : 'Color:',
+// 				fr : 'Color:',
+// 				ru : 'Цвет:'
+// 			}
+// 		}, 'text');
+// 		//
+// 		var item = _items['%1'];
+// 		var opts = item['optionsVariants']['color'];
+// 		//alert(JSON.stringify(item['optionsVariants']));
+// 		var options = item['options'];
+// 		var selectedOption = options['color'];
+
+// 		//
+// 		var colorOptionsHolderEl = colorOptionsEl.getElementsByClassName('optionsHolder')[0];
+// 		var defaultOpt = selectedOption;
+// 		for ( var opt in opts) {
+// 			if (!opts.hasOwnProperty(opt))
+// 				continue;
+// 			//
+// 			var available = opts[opt]['available'];
+// 			//
+// 			if (defaultOpt === null || defaultOpt === undefined)
+// 				if (available) {
+// 					defaultOpt = opt;
+// 					item['options']['color'] = defaultOpt;
+// 					selectedOption = defaultOpt;
+// 				}
+// 			//
+// 			var htmlColor = opts[opt]['htmlColor'];
+// 			//
+// 			var outlineColor = darkenColor(htmlColor, -30);
+// 			var optionEl = document.createElement('div');
+// 			colorOptionsHolderEl.appendChild(optionEl);
+// 			optionEl.classList.add('option');
+// 			optionEl.classList.add('colorOption');
+// 			if (available)
+// 				optionEl.classList.add('optionAvailable');
+// 			else
+// 				optionEl.classList.add('optionUnAvailable');
+// 			optionEl.setAttribute('data-optionvalue', opt);
+// 			if (selectedOption === opt)
+// 				optionEl.classList.add('optionActive');
+// 			optionEl.style.background = htmlColor;
+// 			optionEl.style.outlineColor = outlineColor;
+// 			optionEl.onclick = function(event) {
+// 				var el = event.target;
+// 				var opt = el.dataset.optionvalue;
+// 				var available = opts[opt]['available'];
+// 				if (!available)
+// 					return;
+// 				//
+// 				item['options']['color'] = opt;
+// 				//
+// 				var children = el.parentElement.children;
+// 				for (var i = 0; i < children.length; i++) {
+// 					var child = children[i];
+// 					child.classList.remove('optionActive');
+// 				}
+// 				el.classList.add('optionActive');
+// 				updateOptionableNumAll();
+// 				//
+// 				displayDataSheetent(parentEl);
+// 			};
+// 		}
+// 	}
+	//
+	function displayDataSheetent(parentEl) {
+		var tableEl = parentEl.getElementsByClassName('productDataSheet')[0];
+		tableEl.innerHTML = '';
+		//
+		var keyTexts = {
+			"articul" : {
+				ru : "Артикул"
+			},
+			"sostav" : {
+				ru : "Состав"
+			},
+			"sezon" : {
+				ru : "Сезон"
+			},
+			"prokladka" : {
+				ru : "Прокладка"
+			},
+			"molniya" : {
+				ru : "Молния"
+			},
+			"izgotovitel" : {
+				ru : "Изготовитель"
+			},
+			"ostatok" : {
+				ru : "Остаток на складе, ед."
+			}
+// 			"price" : {
+// 				ru : "Цена"
+// 			}
+		}
+		var item = _items['%1'];
+		var dataSheet = item['productDataSheet'];
+// 		dataSheet['color'] = _itemOptionValues[item['options']['color']];
+// 		dataSheet['size'] = item['options']['size'];
+//		dataSheet['price'] = formatMoneyValue(getOptionableNum(item, 'price'));
+		//
+		var n = 0;
+		for ( var key in dataSheet) {
+			if (!dataSheet.hasOwnProperty(key))
+				continue;
+			//
+			var value = dataSheet[key];
+			//
+			var trEl = document.createElement('tr');
+			trEl.classList.add('dataSheetTr');
+			tableEl.appendChild(trEl);
+			//
+			var td1El = document.createElement('td');
+			td1El.classList.add('dataSheetTd_1');
+			td1El.setAttribute('id', 'productDataSheet.td.1.%1.%2.%3' + n);
+			trEl.appendChild(td1El);
+			txt(td1El, keyTexts, key);
+			//
+			var td2El = document.createElement('td');
+			td2El.classList.add('dataSheetTd_2');
+			td2El.setAttribute('id', 'productDataSheet.td.2.%1.%2.%3' + n);
+			trEl.appendChild(td2El);
+			txt(td2El, dataSheet, key);
+			//
+			n++;
+		}
+	}
+	//
+	var item = _items['%1'];
+	//
+	var parentEl = byId('itemContent.%1.%2.%3');
+// 	var t = item['colorAndSize'];
+// 	var onchangeEventHandler = addToCartCountInputHandler;
+// 	var table = createOptionsTable(t, function(event) {
+// 		var instances = extractInstancesFromTable(table);
+// 		//instances[1]['quantity'] = 7;
+// 		item['instances'] = instances;
+// 		var sectionKey = '%2';
+// 		console.log('AAAAAAAAA>>>>' + sectionKey);
+// 		clickAddToCartHandler(event, item['itemKey'], sectionKey);
+// 	});
+// 	table.classList.add('colorAndSizeTable');
+// 	putInstancesToTable(table, item['instances']);
+// 	parentEl.appendChild(table);
+
+
+
+	//
+	// 	var itemLongNameEl = parentEl.getElementsByClassName('itemLongName')[0];
+	// 	txt(itemLongNameEl, item, 'longName');
+	//
+	// 	var itemDescriptionEl = byId("itemDescription.%1.%2.%3");
+	// 	txt(itemDescriptionEl, item, 'description');
+	// 	displayColorOptions(parentEl);
+	// 	//
+	// 	displaySizeOptions(parentEl);
+	//
+	displayDataSheetent(parentEl);
+	//
+	//
+</script>

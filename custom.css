@@ -1,0 +1,70 @@
+@singleColumnMaxWidthPx: 0;
+@singleColumnHorizontalMarginPx: 0;
+
+@font-face {
+	font-family: Scriptin;
+	src: url(custom/about/SCRIPTIN.ttf);
+}
+
+@font-face {
+	font-family: Lato-Light;
+	src: url(custom/fonts/Lato/Lato-Light.woff);
+}
+
+.autograph {
+	float: right;
+	font-size: 35px;
+	line-height: 35px;
+	font-family: Scriptin;
+	margin-right: @singleColumnHorizontalMarginPx;
+}
+
+.aboutUsArticle {
+	margin-top: 30px;
+	text-align: justify;
+	color: #333;
+}
+
+.aboutUsArticle p{
+	text-indent: 35px;
+	text-align: justify;
+}
+
+.aboutUsArticle * {
+	font-family: Lato-Light;
+	f222222ont-style: italic;
+	font-size: 16px;
+}
+
+.aboutUsArticle a {
+	color: #000;
+	text-decoration: none;
+}
+
+.aboutUsArticle a:hover {
+	border-bottom: 1px dashed #000;
+}
+
+.about_image {
+	box-shadow: 15px 15px 0 #000;
+	float: left;
+	margin-right: 30px;
+	margin-bottom: 30px;
+}
+
+.brandPhone {
+	text-decoration: none;
+}
+
+.brandPhone:hover {
+	border-bottom: 1px dashed;
+}
+
+
+/* single-column mode */
+@media screen and (max-width: @singleColumnMaxWidthPx) {
+	.about_image {
+		width: 100%;
+		height: auto;
+	}
+}

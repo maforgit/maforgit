@@ -1,0 +1,42 @@
+<img id="headerImage" class="brandHTMLImage" src="custom/header/header.jpg" width="1280" height="375">
+<div id="brandHTMLText" class="brandHTMLText" style="width: 1280; height:375">
+	<div id="text1" style="color: #fff; font-family: Impact; text-shadow: 5px 5px 10px rgba(0, 0, 0, 1); transform: rotate(-12deg);">Nik&tiN</div>
+	<div id="text2" style="margin-left: 200px; z-index: 100000; color: #000; font-family: Lato-Light;">ОДЕЖДА • БЕЛЬE • ТРИКОТАЖ • НОСКИ</div>
+
+	<div id="phoneBlock">
+	<div style="color: #000; font-family: Lato-Light;">ОПТОВЫЙ МАГАЗИН В МОСКВЕ</div>
+		<div style="margin-top: 5px;">
+			 <a class="brandPhone" href="tel:%2B7%28903%29%20142-14-21" value="+79031421421" style="cursor: pointer; color: #000; font-family: Lato-Light;" target="_blank">+7(903) 142-14-21</a>
+		</div>
+	</div>
+</div>
+
+<script>
+	function setSize() {
+		var h = headerImageEl.height;
+		//
+		phoneBlock.style.marginTop = -h/1.4 +'px';
+		phoneBlock.style.marginLeft = (h * 2.24) + 'px';
+		phoneBlock.style.fontSize = (h / 16.5) + 'px';
+		//
+		text1.style.marginTop = 0;
+		text1.style.paddingLeft = (h / 4.8) + 'px';
+		text2.style.marginTop = (h / 12) + 'px';
+		text2.style.marginLeft = (h / 1.25) + 'px';
+		text1.style.fontSize = (h / 2) + 'px';
+		text2.style.fontSize = (h / 13.5) + 'px';
+		brandHTMLText.style.display = 'block';
+	}
+
+	var brandHTMLText = document.getElementById('brandHTMLText');
+	var headerImageEl = document.getElementById('headerImage');
+	var text1 = document.getElementById('text1');
+	var text2 = document.getElementById('text2');
+	var phoneBlock = document.getElementById('phoneBlock');
+	headerImageEl.addEventListener('load', function() {
+		setSize();
+	});
+	window.addEventListener('resize', function() {
+		setSize();
+	});
+</script>
