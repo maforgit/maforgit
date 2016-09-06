@@ -312,7 +312,9 @@ function init() {
 		// internally used fields:
 		section['sectionKey'] = sectionKey;
 		section['items'] = {};
-	}
+        section['choosedTags'] = [];
+        section['validItemsCount'] = 0;
+    }
 	//
 	/* Populate section objects with items */
 	for ( var itemKey in _items) {
@@ -1106,15 +1108,6 @@ function createSection(sectionKey, section, customCreateThumbnail) {
 	sectionHeaderEl.style.background = getColor('sectionHeaderBackground', sectionKey);
 	sectionHeaderEl.style.color = getColor('sectionHeaderForeground', sectionKey);
 	//
-	var sectionNameEl = sectionEl.getElementsByClassName('sectionName')[0];
-	sectionNameEl.setAttribute('id', 'sectionName.' + sectionKey);
-	txt(sectionNameEl, section, 'name');
-	//
-	var sectionDescriptionEl = sectionEl.getElementsByClassName('sectionDescription')[0];
-	sectionDescriptionEl.setAttribute('id', 'sectionDescription.' + sectionKey);
-	var count = Object.getOwnPropertyNames(section['items']).length;
-	txt(sectionDescriptionEl, section, 'description', [ count ]);
-	//
 	var sectionBodyHeaderEl = sectionEl.getElementsByClassName('sectionBodyHeader')[0];
 	sectionBodyHeaderEl.setAttribute('id', 'sectionBodyHeader.' + sectionKey);
 	txt(sectionBodyHeaderEl, section, 'header');
@@ -1122,9 +1115,6 @@ function createSection(sectionKey, section, customCreateThumbnail) {
 	var sectionBodyFooterEl = sectionEl.getElementsByClassName('sectionBodyFooter')[0];
 	sectionBodyFooterEl.setAttribute('id', 'sectionBodyFooter.' + sectionKey);
 	txt(sectionBodyFooterEl, section, 'footer');
-	//
-	if (sectionNameEl.innerHTML == '' && sectionDescriptionEl.innerHTML == '')
-		sectionHeaderEl.style.display = 'none';
 	//
 	var cartSectionIndex = _sectionIds.indexOf('section.' + 'ID_CART');
 	var sectionIndex = _sectionIds.indexOf('section.' + sectionKey);
@@ -1142,8 +1132,23 @@ function createSection(sectionKey, section, customCreateThumbnail) {
 		containerEl = createContainerForBlock('block_order');
 	else if (checkout)
 		containerEl = createContainerForBlock('block_checkout');
-	else
-		containerEl = createContainer(sectionKey, items, customCreateThumbnail);
+	else {
+		containerEl = createContainer();
+        fillContainer(containerEl, sectionKey, items);
+    }
+	//
+	var sectionNameEl = sectionEl.getElementsByClassName('sectionName')[0];
+	sectionNameEl.setAttribute('id', 'sectionName.' + sectionKey);
+	txt(sectionNameEl, section, 'name');
+	//
+	if (sectionNameEl.innerHTML == '' && sectionDescriptionEl.innerHTML == '')
+		sectionHeaderEl.style.display = 'none';
+	//
+	var sectionDescriptionEl = sectionEl.getElementsByClassName('sectionDescription')[0];
+	sectionDescriptionEl.setAttribute('id', 'sectionDescription.' + sectionKey);
+	//var count = Object.getOwnPropertyNames(section['items']).length;
+    var validItemsCount = section['validItemsCount'];
+	txt(sectionDescriptionEl, section, 'description', [ validItemsCount ]);
 	//
 	sectionBodyEl.appendChild(containerEl);
 	//
@@ -1183,16 +1188,41 @@ function createContainerForBlock(blockId) {
 	return containerEl;
 }
 
-function createContainer(sectionKey, items, customCreateThumbnail) {
+function isValid(section, item) {
+    var choosedTags = section['choosedTags'];
+    if(choosedTags.length == 0)
+        return true;
+    //
+    var tags = item['tags'];
+    for (var i = 0; i < choosedTags.length; i++) {
+        var choosedTag = choosedTags[i];
+        if(tags.indexOf(choosedTag) == -1)
+            return false;
+    }
+    return true;
+}
+
+function createContainer() {
 	var containerEl = document.createElement('div');
 	containerEl.classList.add('container');
+	return containerEl;
+}
+
+function fillContainer(containerEl, sectionKey, items) {
+    var section = _sections[sectionKey];
 	var c = 0;
 	var ri = 0;
 	var ci = 0;
 	var rowEl;
+    var n = 0;
 	for ( var itemKey in items) {
 		if (!items.hasOwnProperty(itemKey))
 			continue;
+		//
+		var item = items[itemKey];
+        if(!isValid(section, item))
+            continue;
+        //
 		if (c == 0) {
 			rowEl = document.createElement('div');
 			rowEl.classList.add('row');
@@ -1200,8 +1230,6 @@ function createContainer(sectionKey, items, customCreateThumbnail) {
 			containerEl.appendChild(rowEl);
 			ri++;
 		}
-		//
-		var item = items[itemKey];
 		//
 		var colEl = document.createElement('div');
 		colEl.classList.add('col-' + _colSpan);
@@ -1218,8 +1246,9 @@ function createContainer(sectionKey, items, customCreateThumbnail) {
 			c = 0;
 			ci = 0;
 		}
+        n++;
 	}
-	return containerEl;
+    section['validItemsCount'] = n;
 }
 
 function loadPaymentSystems() {
@@ -1291,6 +1320,7 @@ function redisplayOrderOptions() {
 	//
 	_shipping = 0;
 	//
+    _orderOptions = getOrderOptions();
 	for (var i = 0; i < _orderOptions.length; i++) {
 		var orderOption = _orderOptions[i];
 		var trEl = document.createElement('tr');
@@ -1738,6 +1768,7 @@ function changeCartWithItem(item) {
 
 function changeCartTotal(item, options, count) {
 	_total += count * getOptionableNum(item, 'price', options);
+    redisplayOrderOptions();
 }
 
 function changeCartQuantity(count) {

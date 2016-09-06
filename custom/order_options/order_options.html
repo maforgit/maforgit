@@ -38,11 +38,18 @@ day_phone_b	First three digits of customer's daytime telephone number
 <div style="font-family: Arial">
 	<br> <br>
 	<h3 id="chooseDeliveryMethod"></h3>
-	<br> <input id="delivery_FedEx" type="radio" name="deliveryServicesRadio" value="FedEx" onchange="_orderOptions=getOrderOptions();save('orderOptions', _orderOptions);redisplayOrderOptions();" checked>
+
+    <br> <input id="delivery_FedEx" type="radio" name="deliveryServicesRadio" value="FedEx" onchange="_orderOptions=getOrderOptions();save('orderOptions', _orderOptions);redisplayOrderOptions();" checked>
 	<label id="deliveryOptionLabelFedEx" for="delivery_FedEx" class="deliveryOption"></label>
-	<br> <input id="delivery_DHL" type="radio" name="deliveryServicesRadio" value="DHL" onchange="_orderOptions=getOrderOptions();save('orderOptions', _orderOptions);redisplayOrderOptions();">
+
+    <br> <input id="delivery_DHL" type="radio" name="deliveryServicesRadio" value="DHL" onchange="_orderOptions=getOrderOptions();save('orderOptions', _orderOptions);redisplayOrderOptions();">
 	<label id="deliveryOptionLabelDHL" for="delivery_DHL" class="deliveryOption"></label>
-	<br> <br> <br>
+
+    <br> <input id="delivery_DostavakPoMoskveDoTk" type="radio" name="deliveryServicesRadio" value="DostavakPoMoskveDoTk" onchange="_orderOptions=getOrderOptions();save('orderOptions', _orderOptions);redisplayOrderOptions();">
+	<label id="deliveryOptionLabelDostavakPoMoskveDoTk" for="delivery_DostavakPoMoskveDoTk" class="deliveryOption"></label>
+    <br><br>
+    <small>*При заказе от 10 000 руб. доставка производится БЕСПЛАТНО</small>
+    <br> <br> <br>
 	<h3 id="customerData"></h3>
 	<br>
 	<table style="width: 100%; border-collapse: collapse;">
@@ -69,7 +76,7 @@ day_phone_b	First three digits of customer's daytime telephone number
 	txt(byId('chooseDeliveryMethod'), {
 		text : {
 			en : 'Choose delivery:',
-			ru : 'Укажите вид доставки:'
+			ru : '*Укажите вид доставки:'
 		}
 	}, 'text');
 	//
@@ -82,17 +89,23 @@ day_phone_b	First three digits of customer's daytime telephone number
 	//
 	txt(byId('deliveryOptionLabelFedEx'), {
 		text : {
-			en : "FedEx delivery",
-			ru : "FedEx доставка"
+			en : "Самовывоз",
+			ru : "Самовывоз"
 		}
 	}, 'text');
 	txt(byId('deliveryOptionLabelDHL'), {
 		text : {
-			en : "DHL delivery",
-			ru : "DHL доставка"
+			en : "Доставка по Москве в пределах МКАД (400 руб.)",
+			ru : "Доставка по Москве в пределах МКАД (400 руб.)"
 		}
 	}, 'text');
-	//
+	txt(byId('deliveryOptionLabelDostavakPoMoskveDoTk'), {
+		text : {
+			en : "Доставка по Москве в пределах МКАД до ТК (500 руб.)",
+			ru : "Доставка по Москве в пределах МКАД до ТК (500 руб.)",
+		}
+	}, 'text');
+    //
 	if (_customerDetails == null)
 		_customerDetails = getOrderCustomerDetails();
 	//
@@ -114,6 +127,8 @@ day_phone_b	First three digits of customer's daytime telephone number
 		byId('delivery_FedEx').checked = true;
 	else if (key == 'DHL')
 		byId('delivery_DHL').checked = true;
-	//
+	else if (key == 'DostavakPoMoskveDoTk')
+		byId('delivery_DostavakPoMoskveDoTk').checked = true;
+    //
 	redisplayOrderOptions();
 </script>
