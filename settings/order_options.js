@@ -62,19 +62,19 @@ function getOrderOptions() {
         });
     }
     //
-    var vat = 18;
-    orderOptions.push({
-        "key": "VAT",
-        "text": {
-            en: 'VAT',
-            ru: 'НДС'
-        },
-        "amount": {
-            "RUB": (_total + skidka) * vat / 100,
-            "USD": 0,
-            "EUR": 0
-        }
-    });
+    //    var vat = 18;
+    //    orderOptions.push({
+    //        "key": "VAT",
+    //        "text": {
+    //            en: 'VAT',
+    //            ru: 'НДС'
+    //        },
+    //        "amount": {
+    //            "RUB": (_total + skidka) * vat / 100,
+    //            "USD": 0,
+    //            "EUR": 0
+    //        }
+    //    });
     //
     orderOptions.push({
         "key": "PACK",
