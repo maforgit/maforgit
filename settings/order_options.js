@@ -32,13 +32,27 @@ function getOrderOptions() {
                 "EUR": 0
             }
         });
-    } else if (_total >= 100001 && _total <= 200000) {
+    } else if (_total >= 100001) {
         skidka = -_total * 5 / 100;
         orderOptions.push({
             "key": "SKIDKA",
             "text": {
                 en: '5%-я скидка на сумму заказа свыше 100 000 руб.',
                 ru: '5%-я скидка на сумму заказа свыше 100 000 руб.'
+            },
+            "amount": {
+                "RUB": skidka,
+                "USD": 0,
+                "EUR": 0
+            }
+        });
+    } else {
+        skidka = 0;
+        orderOptions.push({
+            "key": "SKIDKA",
+            "text": {
+                en: 'Скидка',
+                ru: 'Скидка'
             },
             "amount": {
                 "RUB": skidka,
@@ -53,7 +67,7 @@ function getOrderOptions() {
         "key": "VAT",
         "text": {
             en: 'VAT',
-            ru: 'НДС (' + vat + '%)'
+            ru: 'НДС'
         },
         "amount": {
             "RUB": (_total + skidka) * vat / 100,
