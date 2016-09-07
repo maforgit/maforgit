@@ -10,7 +10,7 @@ var _parameters = {};
 function formatMoneyValue(value) {
 	var result;
 	if (_currencyKey == 'RUB') {
-		var fixed = isInt(value) ? 0 : 2;
+		var fixed = 2; //isInt(value) ? 0 : 2;
 		result = formatMoney(value, fixed, '.', ' ') + ' ' + (_langKey == 'ru' ? 'руб.' : 'RUB');
 	} else
 		result = value.toLocaleString(_langKey, {
@@ -24,7 +24,7 @@ function formatMoneyValueWithoutCurrencySymbol(value) {
 	var v = formatMoneyValue(value);
 	var pos1 = v.search(/\d/);
 	var pos2 = v.length - reverse(v).search(/\d/);
-	return v.substring(pos1, pos2).trim();
+	return (value < 0 ? '-' : '') + v.substring(pos1, pos2).trim();
 }
 
 function updateTextAll() {
