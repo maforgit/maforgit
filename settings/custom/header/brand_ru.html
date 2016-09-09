@@ -1,5 +1,4 @@
-<img id="headerImage" class="brandHTMLImage" src="settings/custom/header/header.jpg" width="1280" height="375">
-<div id="brandHTMLText" class="brandHTMLText" style="width: 1280; height:375">
+<div id="brandHTMLText" class="brandHTMLText">
 	<div id="text1" style="color: #fff; font-family: Impact; text-shadow: 5px 5px 10px rgba(0, 0, 0, 1); transform: rotate(-12deg);">Nik&tiN</div>
 	<div id="text2" style="margin-left: 200px; z-index: 100000; color: #000; font-family: Lato-Light;">ОДЕЖДА • БЕЛЬE • ТРИКОТАЖ • НОСКИ</div>
 
@@ -13,7 +12,7 @@
 
 <script>
 	function setSize() {
-		var h = headerImageEl.height;
+		var h = _headerImageEl.height;
 		//
 		phoneBlock.style.marginTop = -h/1.4 +'px';
 		phoneBlock.style.marginLeft = (h * 2.24) + 'px';
@@ -28,14 +27,11 @@
 		brandHTMLText.style.display = 'block';
 	}
 
-	var brandHTMLText = document.getElementById('brandHTMLText');
-	var headerImageEl = document.getElementById('headerImage');
-	var text1 = document.getElementById('text1');
-	var text2 = document.getElementById('text2');
-	var phoneBlock = document.getElementById('phoneBlock');
-	headerImageEl.addEventListener('load', function() {
-		setSize();
-	});
+	var brandHTMLText = byId('brandHTMLText');
+	var text1 = byId('text1');
+	var text2 = byId('text2');
+	var phoneBlock = byId('phoneBlock');
+	setSize();
 	window.addEventListener('resize', function() {
 		setSize();
 	});

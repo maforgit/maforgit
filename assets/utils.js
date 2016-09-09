@@ -85,6 +85,8 @@ var _map = {};
 //
 var _colorWindowOpen = null;
 //
+var _headerImageEl;
+
 function loadData() {
     var div = byId('itemsHtmlHolder');
     loadHtmlFile(div, 'settings/images.html', function () {
@@ -280,6 +282,9 @@ function downloadSupplierOrder(html) {
 }
 
 function init() {
+    //
+    _headerImageEl = byId('headerImage');
+    _headerImageEl.src = getImage(_resources['headerImage']);
     //
     _single_column_px = _layout['singleColumnMaxWidthPx'];
     //

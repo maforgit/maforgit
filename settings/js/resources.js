@@ -3,6 +3,7 @@
 function getResources() {
 	return {
 		"dataVersion" : "01234567889",
+        headerImage: "settings/custom/header/header.jpg",
 		//		"favicon" : "settings/custom/favicon.png",
 		"favicon" : "data:image/png;base64,\
 		iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABrUlEQVR42mNkwAOepOgxMTD9mwhk\
