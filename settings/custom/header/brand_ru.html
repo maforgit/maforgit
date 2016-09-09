@@ -31,6 +31,9 @@
 	var text1 = byId('text1');
 	var text2 = byId('text2');
 	var phoneBlock = byId('phoneBlock');
+    _headerImageEl.addEventListener('load', function() {
+		setSize();
+	});
 	setSize();
 	window.addEventListener('resize', function() {
 		setSize();
