@@ -3,7 +3,7 @@
 function getResources() {
 	return {
 		"dataVersion" : "01234567889",
-		//		"favicon" : "custom/favicon.png",
+		//		"favicon" : "settings/custom/favicon.png",
 		"favicon" : "data:image/png;base64,\
 		iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABrUlEQVR42mNkwAOepOgxMTD9mwhk\
 		5gDxQSB2l5l15SeyGkYGAuBJMtAQ5n+rgcwgIF4ENCCeJAOghvADXbIHqNoEyK0BGtKK14DXU9lA\
@@ -47,11 +47,11 @@ function getResources() {
 		},
 		"shoppingCart" : "&#xf07a;", // &#xf07a; - cart | &#xf291; - basket | &#xf290; - bag
 		"brandHTML" : {
-			"en" : 'file:///custom/header/brand_en.html',
-			"fr" : 'file:///custom/header/brand_fr.html',
-			"ru" : 'file:///custom/header/brand_ru.html'
+			"en" : 'file:///settings/custom/header/brand_en.html',
+			"fr" : 'file:///settings/custom/header/brand_fr.html',
+			"ru" : 'file:///settings/custom/header/brand_ru.html'
 		},
-		"footer" : 'file:///custom/footer/footer.html',
+		"footer" : 'file:///settings/custom/footer/footer.html',
 		"buttonAddToCartText" : {
 			"en" : "ADD TO CART",
 			"ru" : "В КОРЗИНУ"

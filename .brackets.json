@@ -1,10 +1,3 @@
 {
-    "brackets-minifier.on-save-project": false,
-    "brackets-minifier.js-project-minify": false,
-    "brackets-minifier.css-project-minify": false,
-    "brackets-minifier.js-custom-path": "",
-    "brackets-minifier.css-custom-path": "",
-    "brackets-minifier.project-exclude": "",
-    "brackets-minifier.js-mangle": true,
-    "brackets-minifier.js-compress": true
+    "sbruchmann.staticpreview.basepath": "/home/qsecofr/Desktop/workspaces/workspace_micro_store/N/ngvmsk/"
 }

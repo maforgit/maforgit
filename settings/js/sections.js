@@ -53,9 +53,9 @@ function getSections() {
                 "ru": "ЮР. ЛИЦА • ИП • ФИЗ. ЛИЦА | ОПТ • МЕЛКИЙ ОПТ"
             },
             "header": {
-                en: "file:///custom/about/about_en.html",
-                fr: "file:///custom/about/about_fr.html",
-                ru: "file:///custom/about/about_ru.html"
+                en: "file:///settings/custom/about/about_en.html",
+                fr: "file:///settings/custom/about/about_fr.html",
+                ru: "file:///settings/custom/about/about_ru.html"
             }
         },
         "ID_CART": {
@@ -75,7 +75,7 @@ function getSections() {
             "name": "ORDER",
             "description": "Print Order",
             menu: false,
-            "header": "file:///custom/order_options/order_options.html",
+            "header": "file:///settings/custom/order_options/order_options.html",
             "footer": ""
         },
         "ID_CHECKOUT": {
@@ -88,9 +88,9 @@ function getSections() {
             "description": "",
             menu: false,
             "header": {
-                "en": 'file:///custom/afterThePurchase/afterThePurchase_en.html',
-                "fr": 'file:///custom/afterThePurchase/afterThePurchase_fr.html',
-                "ru": 'file:///custom/afterThePurchase/afterThePurchase_ru.html'
+                "en": 'file:///settings/custom/afterThePurchase/afterThePurchase_en.html',
+                "fr": 'file:///settings/custom/afterThePurchase/afterThePurchase_fr.html',
+                "ru": 'file:///settings/custom/afterThePurchase/afterThePurchase_ru.html'
             }
         }
     };
