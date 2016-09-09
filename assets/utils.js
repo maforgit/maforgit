@@ -283,9 +283,6 @@ function downloadSupplierOrder(html) {
 
 function init() {
     //
-    _headerImageEl = byId('headerImage');
-    _headerImageEl.src = getImage(_resources['headerImage']);
-    //
     _single_column_px = _layout['singleColumnMaxWidthPx'];
     //
     byId('favicon').setAttribute('href', _resources['favicon'])
@@ -2149,7 +2146,12 @@ function save(key, obj) {
 
 /////////////////////////////////////  E N D  /////////////////////////////////////////////////
 _urlParams = getUrlParams(location.search);
-
+//
+_resources = getResources();
+//
+_headerImageEl = byId('headerImage');
+_headerImageEl.src = getImage(_resources['headerImage']);
+//
 /* Load settings data */
 _color_list = getColorList();
 _colors = getColors();
@@ -2161,7 +2163,6 @@ _itemOptionValues = getItemOptionsValues();
 _languages = getLanguages();
 _layout = getLayout();
 _payment_service_providers = getPayment_service_providers();
-_resources = getResources();
 _sections = getSections();
 _orderStoreDetails = getOrderStoreDetails();
 _items = getItems();
