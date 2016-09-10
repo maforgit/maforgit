@@ -36,9 +36,9 @@ function getResources() {
 		//"iconCart" : "&#xf291;", // basket
 		//"iconCart" : "&#xf290;", // bag
 		"title" : {
-			"en" : "Estherin",
-			"fr" : "L’Esthète",
-			"ru" : "Натали"
+			"en" : "Nik&tiN",
+			"fr" : "Nik&tiN",
+			"ru" : "Nik&tiN"
 		},
 		"leftTopText" : {
 			"en" : "CALL US: 1-800-331-0085",
