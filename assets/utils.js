@@ -26,6 +26,8 @@
 //
 var IMG_1x1 = 'data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
 var _columnsCount = 12; // hardcoded in assets/grid12.css
+var _headerBarHeight = 45; // hardcoded in assets/style.css
+//
 var _single_column_px;
 //
 var _color_list;
@@ -51,7 +53,7 @@ var _resized = false;
 var _itemDetailsPageEl = null;
 var _currentThumbnailEl = null;
 var _savedInnerWidth = null;
-var _sectionIds = [];
+var _sectionsKeysArray = [];
 //
 var _langKey;
 var _defaultLangKey;
@@ -317,13 +319,11 @@ function init() {
     for (var sectionKey in _sections) {
         if (!_sections.hasOwnProperty(sectionKey))
             continue;
-        _sectionIds.push('section.' + sectionKey);
+        _sectionsKeysArray.push(sectionKey);
         var section = _sections[sectionKey];
         // internally used fields:
         section['sectionKey'] = sectionKey;
         section['items'] = {};
-        section['choosedTags'] = [];
-        section['validItemsCount'] = 0;
     }
     //
     /* Populate section objects with items */
@@ -377,10 +377,6 @@ function init() {
             var section = _sections[sectionKey];
             if (section === undefined)
                 continue;
-            if (typeof isItemValid == 'function')
-                if (!isItemValid(item))
-                    continue;
-                //
             section['items'][itemKey] = item;
         }
     }
@@ -550,7 +546,7 @@ function redisplayMenu() {
             separator.innerHTML = '&nbsp;•&nbsp;';
         }
         a.setAttribute('id', 'menu-item-a' + '.' + sectionKey);
-        a.setAttribute('onclick', 'jump("section' + '.' + sectionKey + '")');
+        a.setAttribute('onclick', 'jump("a.' + sectionKey + '")');
         a.classList.add('menuLink');
         ul.appendChild(a);
         txt(a, section, 'name');
@@ -647,7 +643,7 @@ function findPos(obj) {
         do {
             curtop += obj.offsetTop;
         } while (obj = obj.offsetParent);
-        return [curtop - 45]; // header bar height
+        return [curtop - _headerBarHeight]; // header bar height
     }
 }
 
@@ -708,38 +704,37 @@ function reloadWithCurrency(currencyKey) {
 }
 
 function goSection(sectionKey, n) {
-    var thisSectionId = 'section.' + sectionKey;
-    var i = _sectionIds.indexOf(thisSectionId);
-    var nextOrPrevSectionId = _sectionIds[i + n];
+    var i = _sectionsKeysArray.indexOf(sectionKey);
+    var nextOrPrevSectionId = 'a.' + _sectionsKeysArray[i + n];
     smoothScrollById(nextOrPrevSectionId);
 }
 
 function manageButtonsPrevNext() {
-    var firstVisibleSectionId = _sectionIds[0];
+    var firstVisibleSectionId = 'section.' + _sectionsKeysArray[0];
     var firstVisibleSectionEl = byId(firstVisibleSectionId);
     var buttonPrev = firstVisibleSectionEl.getElementsByClassName('buttonPrev')[0];
     buttonPrev.style.visibility = 'hidden';
     //
-    for (var i = 0; i < _sectionIds.length; i++) {
-        var sectionId = _sectionIds[i];
+    for (var i = 0; i < _sectionsKeysArray.length; i++) {
+        var sectionId = 'section.' + _sectionsKeysArray[i];
         var sectionEl = byId(sectionId);
         var buttonNext = sectionEl.getElementsByClassName('buttonNext')[0];
         buttonNext.style.visibility = 'visible';
     }
     //
     var lastVisibleSectionId = null;
-    for (var i = 0; i < _sectionIds.length; i++) {
-        var sectionId = _sectionIds[i];
+    for (var i = 0; i < _sectionsKeysArray.length; i++) {
+        var sectionId = 'section.' + _sectionsKeysArray[i];
         var sectionEl = byId(sectionId);
         //
         if (sectionEl.style.display === 'none') {
-            lastVisibleSectionId = _sectionIds[i - 1];
+            lastVisibleSectionId = 'section.' + _sectionsKeysArray[i - 1];
             break;
         }
     }
     //
     if (lastVisibleSectionId === null)
-        lastVisibleSectionId = _sectionIds[_sectionIds.length - 1];
+        lastVisibleSectionId = 'section.' + _sectionsKeysArray[_sectionsKeysArray.length - 1];
     //
     var lastVisibleSectionEl = byId(lastVisibleSectionId);
     //
@@ -1088,6 +1083,12 @@ function createList(customCreateThumbnail) {
             continue;
         var section = _sections[sectionKey];
         //
+        var sectionAnchorEl = document.createElement('a');
+        sectionAnchorEl.setAttribute('id', 'a.' + sectionKey);
+        sectionAnchorEl.setAttribute('name', sectionKey);
+        sectionAnchorEl.classList.add('sectionAnchor');
+        listEl.appendChild(sectionAnchorEl);
+        //
         var rowEl = document.createElement('div');
         rowEl.classList.add('row');
         listEl.appendChild(rowEl);
@@ -1112,7 +1113,7 @@ function createSection(sectionKey, section, customCreateThumbnail) {
     var sectionEl = document.createElement('div');
     sectionEl.classList.add('section');
     //
-    sectionEl.innerHTML = '<a name="' + sectionKey + '"></a><div style="height: 24px;"></div>' + htmlBlocks['section']; // header bar height
+    sectionEl.innerHTML = htmlBlocks['section'];
     var sectionHeaderEl = sectionEl.getElementsByClassName('sectionHeader')[0];
     //
     sectionHeaderEl.style.background = getColor('sectionHeaderBackground', sectionKey);
@@ -1126,8 +1127,8 @@ function createSection(sectionKey, section, customCreateThumbnail) {
     sectionBodyFooterEl.setAttribute('id', 'sectionBodyFooter.' + sectionKey);
     txt(sectionBodyFooterEl, section, 'footer');
     //
-    var cartSectionIndex = _sectionIds.indexOf('section.' + 'ID_CART');
-    var sectionIndex = _sectionIds.indexOf('section.' + sectionKey);
+    var cartSectionIndex = _sectionsKeysArray.indexOf('ID_CART');
+    var sectionIndex = _sectionsKeysArray.indexOf(sectionKey);
     var items;
     if (sectionIndex >= cartSectionIndex) {
         var cartSection = _sections['ID_CART'];
@@ -1156,9 +1157,8 @@ function createSection(sectionKey, section, customCreateThumbnail) {
     //
     var sectionDescriptionEl = sectionEl.getElementsByClassName('sectionDescription')[0];
     sectionDescriptionEl.setAttribute('id', 'sectionDescription.' + sectionKey);
-    //var count = Object.getOwnPropertyNames(section['items']).length;
-    var validItemsCount = section['validItemsCount'];
-    txt(sectionDescriptionEl, section, 'description', [validItemsCount]);
+    var count = Object.getOwnPropertyNames(section['items']).length;
+    txt(sectionDescriptionEl, section, 'description', [count]);
     //
     sectionBodyEl.appendChild(containerEl);
     //
@@ -1198,20 +1198,6 @@ function createContainerForBlock(blockId) {
     return containerEl;
 }
 
-function isValid(section, item) {
-    var choosedTags = section['choosedTags'];
-    if (choosedTags.length == 0)
-        return true;
-    //
-    var tags = item['tags'];
-    for (var i = 0; i < choosedTags.length; i++) {
-        var choosedTag = choosedTags[i];
-        if (tags.indexOf(choosedTag) == -1)
-            return false;
-    }
-    return true;
-}
-
 function createContainer() {
     var containerEl = document.createElement('div');
     containerEl.classList.add('container');
@@ -1224,14 +1210,11 @@ function fillContainer(containerEl, sectionKey, items) {
     var ri = 0;
     var ci = 0;
     var rowEl;
-    var n = 0;
     for (var itemKey in items) {
         if (!items.hasOwnProperty(itemKey))
             continue;
         //
         var item = items[itemKey];
-        if (!isValid(section, item))
-            continue;
         //
         if (c == 0) {
             rowEl = document.createElement('div');
@@ -1256,9 +1239,7 @@ function fillContainer(containerEl, sectionKey, items) {
             c = 0;
             ci = 0;
         }
-        n++;
     }
-    section['validItemsCount'] = n;
 }
 
 function loadPaymentSystems() {
@@ -1550,7 +1531,7 @@ function isElementInViewport(el) {
     var rect = el.getBoundingClientRect();
     var top = rect.top;
     var bottom = rect.bottom;
-    return bottom >= -10 && top <= 11; // header bar height
+    return bottom >= -(_layout['verticalGapPx'] - 1) && top <= (_headerBarHeight + 1); // vertical gap && header bar height
 }
 
 function isMultiColumnMode() {
@@ -2090,9 +2071,9 @@ function updateItemUI(item) {
     var sectionDescriptionEl = cartSectionEl.getElementsByClassName('sectionDescription')[0];
     txt(sectionDescriptionEl, cartSection, 'description', [_totalQuantity, formatMoneyValueWithoutCurrencySymbol(_total)]);
     //
-    var cartSectionIndex = _sectionIds.indexOf('section.' + 'ID_CART');
-    for (var i = cartSectionIndex; i < _sectionIds.length; i++) {
-        var sectionEl = byId(_sectionIds[i]);
+    var cartSectionIndex = _sectionsKeysArray.indexOf('ID_CART');
+    for (var i = cartSectionIndex; i < _sectionsKeysArray.length; i++) {
+        var sectionEl = byId('section.' + _sectionsKeysArray[i]);
         sectionEl.style.display = emptyCart ? 'none' : 'block';
     }
     //
