@@ -546,7 +546,7 @@ function redisplayMenu() {
             separator.innerHTML = '&nbsp;•&nbsp;';
         }
         a.setAttribute('id', 'menu-item-a' + '.' + sectionKey);
-        a.setAttribute('onclick', 'jump("a.' + sectionKey + '")');
+        a.setAttribute('onclick', 'jump("sectionAnchor.' + sectionKey + '")');
         a.classList.add('menuLink');
         ul.appendChild(a);
         txt(a, section, 'name');
@@ -558,8 +558,18 @@ function redisplayMenu() {
         byId('headerBarTop').style.display = 'block';
 }
 
-function jump(h) {
-    var top = byId(h).offsetTop;
+function jump(anchorId) {
+    var anchor = byId(anchorId);
+    var sectionKey = anchor['name'];
+    var checkBox = byId('checkboxShowSection.' + sectionKey);
+    if (checkBox != null) {
+        checkBox.checked = true;
+        var event = document.createEvent("HTMLEvents");
+        event.initEvent("change", false, true);
+        checkBox.dispatchEvent(event);
+    }
+    //
+    var top = anchor.offsetTop;
     window.scrollTo(0, top);
 }
 
@@ -703,9 +713,27 @@ function reloadWithCurrency(currencyKey) {
     redisplayCartItems();
 }
 
+function setSectionVisible(sectionKey, visible) {
+    var sectionAnchorEl = byId('sectionAnchor.' + sectionKey);
+    var sectionRowEl = byId('sectionRow.' + sectionKey);
+    if (visible) {
+        sectionAnchorEl.style.display = 'block';
+        sectionRowEl.style.display = 'block';
+    } else {
+        sectionAnchorEl.style.display = 'none';
+        sectionRowEl.style.display = 'none';
+    }
+}
+
 function goSection(sectionKey, n) {
     var i = _sectionsKeysArray.indexOf(sectionKey);
-    var nextOrPrevSectionId = 'a.' + _sectionsKeysArray[i + n];
+    var nextOrPrevSectionId = 'sectionAnchor.' + _sectionsKeysArray[i + n];
+    var sectionAnchorEl = byId(nextOrPrevSectionId);
+    if (sectionAnchorEl.style.display == 'none') {
+        n = n + (n > 0 ? +1 : -1);
+        goSection(sectionKey, n);
+        return;
+    }
     smoothScrollById(nextOrPrevSectionId);
 }
 
@@ -1084,12 +1112,13 @@ function createList(customCreateThumbnail) {
         var section = _sections[sectionKey];
         //
         var sectionAnchorEl = document.createElement('a');
-        sectionAnchorEl.setAttribute('id', 'a.' + sectionKey);
+        sectionAnchorEl.setAttribute('id', 'sectionAnchor.' + sectionKey);
         sectionAnchorEl.setAttribute('name', sectionKey);
         sectionAnchorEl.classList.add('sectionAnchor');
         listEl.appendChild(sectionAnchorEl);
         //
         var rowEl = document.createElement('div');
+        rowEl.setAttribute('id', 'sectionRow.' + sectionKey);
         rowEl.classList.add('row');
         listEl.appendChild(rowEl);
         //
@@ -1098,8 +1127,12 @@ function createList(customCreateThumbnail) {
         rowEl.appendChild(colEl);
         //
         var sectionEl = createSection(sectionKey, section, customCreateThumbnail);
-        //
         colEl.appendChild(sectionEl);
+        //
+        if (section['filter']) {
+            rowEl.style.display = 'none';
+            sectionAnchorEl.style.display = 'none';
+        }
     }
     return listEl;
 }
@@ -1121,7 +1154,61 @@ function createSection(sectionKey, section, customCreateThumbnail) {
     //
     var sectionBodyHeaderEl = sectionEl.getElementsByClassName('sectionBodyHeader')[0];
     sectionBodyHeaderEl.setAttribute('id', 'sectionBodyHeader.' + sectionKey);
-    txt(sectionBodyHeaderEl, section, 'header');
+    if (sectionKey == 'ID_FILTER') {
+        for (var curSectionKey in _sections) {
+            if (!_sections.hasOwnProperty(curSectionKey))
+                continue;
+            var curSection = _sections[curSectionKey];
+            if (curSection['filter']) {
+                var curCheckBoxId = 'checkboxShowSection.' + curSectionKey;
+                var curCheckBox = document.createElement('input');
+                curCheckBox.setAttribute('id', curCheckBoxId);
+                curCheckBox.setAttribute('data-sectionkey', curSectionKey);
+                curCheckBox.setAttribute('type', 'checkbox');
+                //
+                curCheckBox.onchange = function (event) {
+                    var checkBoxEl = event.target;
+                    var sectionkey = checkBoxEl.getAttribute('data-sectionkey');
+                    var checked = checkBoxEl.checked;
+                    setSectionVisible(sectionkey, checked);
+                }
+                sectionBodyHeaderEl.appendChild(curCheckBox);
+                //
+                var label = document.createElement('label');
+
+               // label.setAttribute('for', curCheckBoxId);
+
+                //
+                var spanNameEl = document.createElement('span');
+                spanNameEl.onclick = function(event) {
+                    var el = event.target;
+                    var sectionkey = el.getAttribute('data-sectionkey');
+                    //alert(el + '  ' + sectionkey);
+                    setSectionVisible(sectionkey, true);
+                    jump('sectionAnchor.' + sectionkey);
+                };
+                spanNameEl.classList.add('catalog');
+                spanNameEl.setAttribute('data-sectionkey', curSectionKey);
+                spanNameEl.setAttribute('id', 'checkboxShowSectionSpanName.' + curSectionKey);
+                txt(spanNameEl, curSection, 'name');
+                label.appendChild(spanNameEl);
+                //
+                var count = Object.getOwnPropertyNames(curSection['items']).length;
+                var spanCountEl = document.createElement('span');
+                spanCountEl.classList.add('catalogItemCount');
+                spanCountEl.innerHTML = '&nbsp;(' + count + ')<br>';
+                label.appendChild(spanCountEl);
+                //
+                sectionBodyHeaderEl.appendChild(label);
+                sectionBodyHeaderEl.style.marginTop = '20px';
+                //
+                //                var name = txt(curSection, 'name');
+                //                var description = curSection['description'];
+                //
+            }
+        }
+    } else
+        txt(sectionBodyHeaderEl, section, 'header');
     //
     var sectionBodyFooterEl = sectionEl.getElementsByClassName('sectionBodyFooter')[0];
     sectionBodyFooterEl.setAttribute('id', 'sectionBodyFooter.' + sectionKey);
@@ -1507,6 +1594,11 @@ function updateMenu() {
     for (var sectionKey in _sections) {
         if (!_sections.hasOwnProperty(sectionKey))
             continue;
+        //
+        var anchor = byId('sectionAnchor.' + sectionKey);
+        if (anchor == null || anchor.style.display == 'none')
+            continue;
+        //
         var section = _sections[sectionKey];
         //
         var sectionId = 'section.' + sectionKey;
@@ -2228,6 +2320,8 @@ function load() {
     redisplayMenu();
     //
     manageButtonsPrevNext();
+
+    //setSectionVisible('RAINCOATS', false);
 }
 
 function clickAddToCartHandler(event, itemKey, sectionKey) {
@@ -2335,14 +2429,23 @@ function clickDeleteHandler(event) {
     return false;
 }
 
-//function addToCartCountInputHandler(event) {
-//    event.stopPropagation();
-//    //
-//    var el = event.target;
-//    var value = parseInt(el.value);
-//    if (isNaN(value) || value <= 0)
-//        el.value = 1;
-//}
+function simpleClickPlusMinusHandler(event, count) {
+    var plusMinusEl = event.target;
+    var el = plusMinusEl.parentElement.getElementsByClassName('addToCartCountInput')[0];
+    var currentVal = Math.abs(parseInt(el.value));
+    if (currentVal == 1 && count == -1)
+        return;
+    el.value = currentVal + count;
+}
+
+function addToCartCountInputHandler(event) {
+    event.stopPropagation();
+    //
+    var el = event.target;
+    var value = parseInt(el.value);
+    if (isNaN(value) || value <= 0)
+        el.value = 1;
+}
 
 function clickPlusMinusHandler(event, count) {
     event.stopPropagation();

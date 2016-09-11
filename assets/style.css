@@ -142,6 +142,20 @@ body {
     text-align: right;
 }
 
+.catalog {
+    white-space: nowrap;
+    font-size: 18px;
+    font-family: menu;
+}
+
+.catalog:hover {
+   border-bottom: 1px dashed #000;
+}
+
+.catalogItemCount {
+    font-size: 18px;
+    font-family: menu;
+}
 /**********************************************************************************************/
 
 .cartTotal {

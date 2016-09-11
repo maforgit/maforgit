@@ -2,6 +2,57 @@
 
 function getItems() {
 	var items = {
+        "OLY_8879.jpg" : {
+			"name" : {
+				ru : "ПЛАЩ С КРУЖЕВОМ"
+			},
+			"longName" : "Плащ с коротким рукавом и кружевом ART-1021",
+			"description" : "Плащ женский (с кружевом) пошит из блестящих тканей разных цветов. В модных коллекциях на весну присутствуют и однотонные блестящие модели, и комбинированные с наличием декоративных вставок, и варианты с принтами.",
+			"tags" : [ "JENSKAYA_ODEJDA", "PLASHI", "2KRASNIY" ],
+			"supplier" : "СКЛАД 1",
+			"images" : [ "/settings/custom/img/items/OLY_8879/1.jpg" ],
+			"price" : {
+				"RUB" : 600.00
+			},
+			"supplierPrice" : function(options) {
+				return {
+					"USD" : 122.50,
+					"EUR" : 131.00,
+					"RUB" : 1600.00
+				};
+			},
+			"sections" : ["NEW", "RAINCOATS" ],
+			"info" : {
+				"222en" : "file:///custom/items/plash2_en.html",
+				"ru222" : "file:///custom/items/plash2_en.html"
+			},
+			"options" : {
+				"size" : null,
+				"color" : null
+			},
+            addToCartButton: true,
+			"productDataSheet" : {
+				"articul" : "ART-1021",
+				"sostav" : {
+					"ru" : "100% Итальянский полированный хлопок, Турецкое кружево",
+				},
+				"sezon" : {
+					ru : "Весна - Лето"
+				},
+				"prokladka" : {
+					ru : "Подкладка: 100% полиэстер"
+				},
+				"molniya" : {
+					ru : "Производство Корея"
+				},
+				"izgotovitel" : {
+					ru : "Москва (Россия)"
+				},
+				"ostatok" : "251"
+			},
+			"minCount" : 1,
+			"maxCount" : 1251
+        },
 		"ART-1021" : {
 			"name" : {
 				ru : "ПЛАЩ С КРУЖЕВОМ"
