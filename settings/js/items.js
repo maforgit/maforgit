@@ -2,7 +2,7 @@
 
 function getItems() {
 	var items = {
-        "OLY_8879.jpg" : {
+        "OLY_8879" : {
 			"name" : {
 				ru : "ПЛАЩ С КРУЖЕВОМ"
 			},
