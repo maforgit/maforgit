@@ -14,18 +14,7 @@ function getItems() {
 			"price" : {
 				"RUB" : 600.00
 			},
-			"supplierPrice" : function(options) {
-				return {
-					"USD" : 122.50,
-					"EUR" : 131.00,
-					"RUB" : 1600.00
-				};
-			},
 			"sections" : ["NEW", "RAINCOATS" ],
-			"info" : {
-				"222en" : "file:///custom/items/plash2_en.html",
-				"ru222" : "file:///custom/items/plash2_en.html"
-			},
             addToCartButton: true,
 			"productDataSheet" : {
 				"articul" : "ART-1021",
@@ -61,18 +50,7 @@ function getItems() {
 			"price" : {
 				"RUB" : 600.00
 			},
-			"supplierPrice" : function(options) {
-				return {
-					"USD" : 122.50,
-					"EUR" : 131.00,
-					"RUB" : 1600.00
-				};
-			},
 			"sections" : [ "RAINCOATS" ],
-			"info" : {
-				"en" : "file:///custom/items/plash2_en.html",
-				"ru222" : "file:///custom/items/plash2_en.html"
-			},
 			"options" : {
 				"size" : null,
 				"color" : null
@@ -160,18 +138,7 @@ function getItems() {
 					"RUB" : 600.00
 				};
 			},
-			"supplierPrice" : function(options) {
-				return {
-					"USD" : 122.50,
-					"EUR" : 131.00,
-					"RUB" : 1600.00
-				};
-			},
 			"sections" : [ "RAINCOATS" ],
-			"info" : {
-				"en" : "file:///custom/items/plash2_en.html",
-				"ru222" : "file:///custom/items/plash2_en.html"
-			},
 			"options" : {
 				"size" : null,
 				"color" : null
@@ -237,18 +204,7 @@ function getItems() {
 					"RUB" : 600.00
 				};
 			},
-			"supplierPrice" : function(options) {
-				return {
-					"USD" : 122.50,
-					"EUR" : 131.00,
-					"RUB" : 1600.00
-				};
-			},
 			"sections" : [ "RAINCOATS" ],
-			"info" : {
-				"en" : "file:///custom/items/plash2_en.html",
-				"ru222" : "file:///custom/items/plash2_en.html"
-			},
 			"options" : {
 				"size" : null,
 				"color" : null
@@ -311,18 +267,7 @@ function getItems() {
 			"price" : {
 				"RUB" : 600.00
 			},
-			"supplierPrice" : function(options) {
-				return {
-					"USD" : 122.50,
-					"EUR" : 131.00,
-					"RUB" : 1600.00
-				};
-			},
 			"sections" : [ "RAINCOATS" ],
-			"info" : {
-				"en" : "file:///custom/items/plash2_en.html",
-				"ru222" : "file:///custom/items/plash2_en.html"
-			},
 			"options" : {
 				"size" : null,
 				"color" : null
@@ -376,7 +321,7 @@ function getItems() {
 			"productDataSheet" : {
 				"articul" : "ART-1021",
 				"sostav" : {
-					"ru" : "100% ​Итальянский полированный хлопок, Турецкое кружево",
+					"ru" : "100% Итальянский полированный хлопок, Турецкое кружево",
 				},
 				"sezon" : {
 					ru : "Весна - Лето"
@@ -408,18 +353,7 @@ function getItems() {
 			"price" : {
 				"RUB" : 600.00
 			},
-			"supplierPrice" : function(options) {
-				return {
-					"USD" : 122.50,
-					"EUR" : 131.00,
-					"RUB" : 1600.00
-				};
-			},
 			"sections" : [ "RAINCOATS" ],
-			"info" : {
-				"en" : "file:///custom/items/plash2_en.html",
-				"ru222" : "file:///custom/items/plash2_en.html"
-			},
 			"options" : {
 				"size" : null,
 				"color" : null
@@ -505,18 +439,7 @@ function getItems() {
 			"price" : {
 				"RUB" : 600.00
 			},
-			"supplierPrice" : function(options) {
-				return {
-					"USD" : 122.50,
-					"EUR" : 131.00,
-					"RUB" : 1600.00
-				};
-			},
 			"sections" : [ "RAINCOATS" ],
-			"info" : {
-				"en" : "file:///custom/items/plash2_en.html",
-				"ru222" : "file:///custom/items/plash2_en.html"
-			},
 			"options" : {
 				"size" : null,
 				"color" : null
@@ -590,9 +513,6 @@ function getItems() {
 			"maxCount" : 1251
 		},
 	};
-    //
-    //delete items['ART-1021'];
-    //delete items['ART-1022'];
     //
     return items;
 }

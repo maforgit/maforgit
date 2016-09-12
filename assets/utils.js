@@ -529,8 +529,8 @@ function redisplayMenu() {
             continue;
         var section = _sections[sectionKey];
         var name = section['name'];
-        var menu = section['menu'];
-        if (menu !== true)
+        var showInMenu = section['showInMenu'];
+        if (showInMenu !== true)
             continue;
         var sectionId = 'section.' + sectionKey;
         var sectionEl = byId(sectionId);
@@ -1131,7 +1131,7 @@ function createList(customCreateThumbnail) {
         var sectionEl = createSection(sectionKey, section, customCreateThumbnail);
         colEl.appendChild(sectionEl);
         //
-        if (section['filter']) {
+        if (section['showInCatalog']) {
             rowEl.style.display = 'none';
             sectionAnchorEl.style.display = 'none';
         }
@@ -1156,13 +1156,13 @@ function createSection(sectionKey, section, customCreateThumbnail) {
     //
     var sectionBodyHeaderEl = sectionEl.getElementsByClassName('sectionBodyHeader')[0];
     sectionBodyHeaderEl.setAttribute('id', 'sectionBodyHeader.' + sectionKey);
-    if (sectionKey == 'ID_FILTER') {
+    if (sectionKey == 'ID_CATALOG') {
         sectionBodyHeaderEl.style.marginTop = '20px';
         for (var curSectionKey in _sections) {
             if (!_sections.hasOwnProperty(curSectionKey))
                 continue;
             var curSection = _sections[curSectionKey];
-            if (curSection['filter']) {
+            if (curSection['showInCatalog']) {
                 //
                 var curCheckBoxId = 'checkboxShowSection.' + curSectionKey;
                 var curCheckBox = document.createElement('input');

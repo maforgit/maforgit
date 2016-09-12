@@ -2,13 +2,13 @@
 
 function getSections() {
     return {
-        "ID_FILTER": {
+        "ID_CATALOG": {
             "name": {
                 "en": "CATALOG",
                 "fr": "CATALOG",
                 "ru": "КАТАЛОГ"
             },
-            menu: true
+            showInMenu: true
         },
         "NEW": {
             "name": {
@@ -21,8 +21,8 @@ function getSections() {
                 "fr": "Nouveaux choses (%1 articles)",
                 "ru": "сезон зима-лето 2017 (товаров: %1)"
             },
-            menu: true,
-            filter: true
+            showInMenu: true,
+            showInCatalog: true
         },
         "RAINCOATS": {
             "name": {
@@ -35,8 +35,8 @@ function getSections() {
                 "fr": "%1 article(s)",
                 "ru": "товаров: %1"
             },
-            menu: true,
-            filter: true
+            showInMenu: true,
+            showInCatalog: true
         },
         "WHOLESALE": {
             "name": {
@@ -49,8 +49,8 @@ function getSections() {
                 "fr": "%1 article(s)",
                 "ru": "фабричные остатки по низким ценам (товаров: %1)"
             },
-            menu: true,
-            filter: true
+            showInMenu: true,
+            showInCatalog: true
         },
         "ABOUT": {
             "name": {
@@ -80,24 +80,24 @@ function getSections() {
                 "fr": "%1 article(s)",
                 "ru": "товаров: %1"
             },
-            menu: true
+            showInMenu: true
         },
         "ID_ORDER": {
             "name": "ORDER",
             "description": "Print Order",
-            menu: false,
+            showInMenu: false,
             "header": "file:///settings/custom/order_options/order_options.html",
             "footer": ""
         },
         "ID_CHECKOUT": {
             "name": "CHECKOUT",
             "description": "Checkout",
-            menu: false
+            showInMenu: false
         },
         "ID_AFTER_THE_PURCHASE": {
             "name": "AFTER THE PURCHASE",
             "description": "",
-            menu: false,
+            showInMenu: false,
             "header": {
                 "en": 'file:///settings/custom/afterThePurchase/afterThePurchase_en.html',
                 "fr": 'file:///settings/custom/afterThePurchase/afterThePurchase_fr.html',
