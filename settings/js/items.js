@@ -26,10 +26,6 @@ function getItems() {
 				"222en" : "file:///custom/items/plash2_en.html",
 				"ru222" : "file:///custom/items/plash2_en.html"
 			},
-			"options" : {
-				"size" : null,
-				"color" : null
-			},
             addToCartButton: true,
 			"productDataSheet" : {
 				"articul" : "ART-1021",

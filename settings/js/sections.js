@@ -2,19 +2,14 @@
 
 function getSections() {
     return {
-//        "ID_FILTER": {
-//            "name": {
-//                "en": "CATALOG",
-//                "fr": "CATALOG",
-//                "ru": "КАТАЛОГ"
-//            },
-//            "description": {
-//                "en": "FILTER",
-//                "fr": "FILTER",
-//                "ru": "FILTER"
-//            },
-//            menu: true
-//        },
+        "ID_FILTER": {
+            "name": {
+                "en": "CATALOG",
+                "fr": "CATALOG",
+                "ru": "КАТАЛОГ"
+            },
+            menu: true
+        },
         "NEW": {
             "name": {
                 "en": "NEW",
@@ -27,7 +22,7 @@ function getSections() {
                 "ru": "сезон зима-лето 2017 (товаров: %1)"
             },
             menu: true,
-            f222ilter: true
+            filter: true
         },
         "RAINCOATS": {
             "name": {
@@ -41,7 +36,7 @@ function getSections() {
                 "ru": "товаров: %1"
             },
             menu: true,
-            f222ilter: true
+            filter: true
         },
         "WHOLESALE": {
             "name": {
@@ -55,7 +50,7 @@ function getSections() {
                 "ru": "фабричные остатки по низким ценам (товаров: %1)"
             },
             menu: true,
-            f222ilter: true
+            filter: true
         },
         "ABOUT": {
             "name": {

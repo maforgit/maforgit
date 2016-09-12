@@ -366,7 +366,8 @@ function init() {
             item['quantity'] = itemQuantity;
             //
             if (itemQuantity !== 0)
-                _cartItems[itemKey] = item;
+                changeCartWithItem(item);
+            //_cartItems[itemKey] = item;
             //
             _totalQuantity += itemQuantity;
         }
@@ -380,6 +381,7 @@ function init() {
             section['items'][itemKey] = item;
         }
     }
+    //_cartItems = sortObj(_cartItems);
     //
     /* Languages */
     var langChooserEl = byId('langChooser');
@@ -1155,16 +1157,19 @@ function createSection(sectionKey, section, customCreateThumbnail) {
     var sectionBodyHeaderEl = sectionEl.getElementsByClassName('sectionBodyHeader')[0];
     sectionBodyHeaderEl.setAttribute('id', 'sectionBodyHeader.' + sectionKey);
     if (sectionKey == 'ID_FILTER') {
+        sectionBodyHeaderEl.style.marginTop = '20px';
         for (var curSectionKey in _sections) {
             if (!_sections.hasOwnProperty(curSectionKey))
                 continue;
             var curSection = _sections[curSectionKey];
             if (curSection['filter']) {
+                //
                 var curCheckBoxId = 'checkboxShowSection.' + curSectionKey;
                 var curCheckBox = document.createElement('input');
                 curCheckBox.setAttribute('id', curCheckBoxId);
                 curCheckBox.setAttribute('data-sectionkey', curSectionKey);
                 curCheckBox.setAttribute('type', 'checkbox');
+                curCheckBox.classList.add('catalogCheckBox');
                 //
                 curCheckBox.onchange = function (event) {
                     var checkBoxEl = event.target;
@@ -1174,13 +1179,8 @@ function createSection(sectionKey, section, customCreateThumbnail) {
                 }
                 sectionBodyHeaderEl.appendChild(curCheckBox);
                 //
-                var label = document.createElement('label');
-
-               // label.setAttribute('for', curCheckBoxId);
-
-                //
                 var spanNameEl = document.createElement('span');
-                spanNameEl.onclick = function(event) {
+                spanNameEl.onclick = function (event) {
                     var el = event.target;
                     var sectionkey = el.getAttribute('data-sectionkey');
                     //alert(el + '  ' + sectionkey);
@@ -1191,20 +1191,13 @@ function createSection(sectionKey, section, customCreateThumbnail) {
                 spanNameEl.setAttribute('data-sectionkey', curSectionKey);
                 spanNameEl.setAttribute('id', 'checkboxShowSectionSpanName.' + curSectionKey);
                 txt(spanNameEl, curSection, 'name');
-                label.appendChild(spanNameEl);
+                sectionBodyHeaderEl.appendChild(spanNameEl);
                 //
                 var count = Object.getOwnPropertyNames(curSection['items']).length;
                 var spanCountEl = document.createElement('span');
                 spanCountEl.classList.add('catalogItemCount');
                 spanCountEl.innerHTML = '&nbsp;(' + count + ')<br>';
-                label.appendChild(spanCountEl);
-                //
-                sectionBodyHeaderEl.appendChild(label);
-                sectionBodyHeaderEl.style.marginTop = '20px';
-                //
-                //                var name = txt(curSection, 'name');
-                //                var description = curSection['description'];
-                //
+                sectionBodyHeaderEl.appendChild(spanCountEl);
             }
         }
     } else
@@ -2057,8 +2050,8 @@ function updateItemUI(item) {
             var imgEl = document.createElement('img');
             imgEl.setAttribute('style', "cursor: pointer; height: 50px; margin-auto;");
             imgEl.setAttribute('onclick', "window.open(event.target.src, '_blank');");
-            loadImage(imgEl, imgSrc);
-            //imgEl.src = imgSrc;
+            //loadImage(imgEl, imgSrc);
+            imgEl.src = imgSrc;
             tdImage.appendChild(imgEl);
             //
             var tdProductId = 'orderTdProduct.' + i + '.' + itemKey;
@@ -2522,7 +2515,7 @@ function updateItemDetailsPageEl(item) {
         return;
     //
     var table = _itemDetailsPageEl.querySelector('.colorAndSizeTable');
-    if (table.display == 'none')
+    if (table.style.display == 'none')
         return;
     //
     clearTable(table);
@@ -2773,15 +2766,16 @@ function customCreateItemDetailsPage(item, sectionKey) {
     productDescriptionEl.setAttribute('onclick', 'productPageClickHandler()');
     txt(productDescriptionEl, item, 'description');
     //
-    var colorAndSizeTableTitleEl = el.getElementsByClassName('colorAndSizeTableTitle')[0];
-    colorAndSizeTableTitleEl.setAttribute('id', 'colorAndSizeTableTitle' + '.' + itemKey + '.' + sectionKey);
-    txt(colorAndSizeTableTitleEl, _resources, 'colorAndSizeTableTitle');
-    //
     var t = item['colorAndSize'];
     if (t !== undefined) {
+        //
+        var colorAndSizeTableTitleEl = el.getElementsByClassName('colorAndSizeTableTitle')[0];
+        colorAndSizeTableTitleEl.setAttribute('id', 'colorAndSizeTableTitle' + '.' + itemKey + '.' + sectionKey);
+        txt(colorAndSizeTableTitleEl, _resources, 'colorAndSizeTableTitle');
+        //
         var table = el.getElementsByClassName('colorAndSizeTable')[0];
         table.style.display = 'block';
-        createOptionsTable(table, t, function (event) {
+        createColorAndSizeTable(table, t, function (event) {
             var input = event.target;
             var size = input.getAttribute('data-size');
             var color = input.getAttribute('data-color');
@@ -2794,7 +2788,7 @@ function customCreateItemDetailsPage(item, sectionKey) {
             var instance = item['instances'][index];
             //
             if (input.value == '' || parseInt(input.value) == 0) {
-                //				if (index != -1) {
+                //
                 var options = instance['options'];
                 var count = 0;
                 //
@@ -2832,6 +2826,7 @@ function customCreateItemDetailsPage(item, sectionKey) {
                 saveItem(item);
             }
         });
+
         putInstancesToTable(table, item['instances']);
     }
     //
@@ -2839,11 +2834,11 @@ function customCreateItemDetailsPage(item, sectionKey) {
     var minCount = item['minCount'];
     var maxCount = item['maxCount'];
     var noInputField = minCount == maxCount;
-    //var canAddToCart = !(maxCount == undefined || maxCount == 0);
+    //
     var canAddToCart = item['addToCartButton'];
     //
     var addToCartEl = el.getElementsByClassName('addToCart')[0];
-    //addToCartEl.style.display = (maxCount == undefined || maxCount == 0) ? 'none' : 'block';
+    //
     addToCartEl.style.display = canAddToCart ? 'block' : 'none';
     //
     // ADD TO CART INPUT
@@ -3019,7 +3014,7 @@ function extractInstancesFromTable(table) {
     return instances;
 }
 
-function createOptionsTable(table, t, onchangeEventHandler) {
+function createColorAndSizeTable(table, t, onchangeEventHandler) {
     var headerBg = "#555";
     var headerFg = "#eee";
     var unavailableBg = "#eee";
@@ -3028,8 +3023,6 @@ function createOptionsTable(table, t, onchangeEventHandler) {
         BORDER_BOLD = '1px solid #fff';
     const
         ROW_HEIGHT = '30px';
-    table.style.fontFamily = 'Lato-Light';
-    table.style.borderCollapse = 'collapse';
     //
     for (var color in t) {
         if (!t.hasOwnProperty(color))
@@ -3083,7 +3076,6 @@ function createOptionsTable(table, t, onchangeEventHandler) {
         tdColor.appendChild(colorRectDiv);
         //
         tdColor.style.color = headerFg;
-        //tdColor.style.cursor = 'pointer';
 
         tdColor.style.background = headerBg;
         tdColor.style.border = BORDER_BOLD;
@@ -3103,7 +3095,6 @@ function createOptionsTable(table, t, onchangeEventHandler) {
         colorRectDiv.style.border = '1px solid ' + headerFg;
         colorRectDiv.style.width = '15px';
         colorRectDiv.style.height = '15px';
-        //colorRectDiv.style.cursor = 'pointer';
         //
         var colorNameSpan = document.createElement('span');
         tdColor.appendChild(colorNameSpan);
