@@ -248,10 +248,10 @@ function getImage(str) {
 			key = str.substring(1, pos1);
 			index = parseInt(str.substring(pos1 + 1, pos2));
 		}
-        //console.log(key);
+		//console.log(key);
 		return _map[key][index];
 	}
-    return str;
+	return str;
 }
 
 function getBackground(str) {
