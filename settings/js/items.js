@@ -2,7 +2,7 @@
 
 function getItems() {
 	var items = {
-        "OLY_8879" : {
+		"OLY_8879" : {
 			"name" : {
 				ru : "ПЛАЩ С КРУЖЕВОМ"
 			},
@@ -10,12 +10,12 @@ function getItems() {
 			"description" : "Плащ женский (с кружевом) пошит из блестящих тканей разных цветов. В модных коллекциях на весну присутствуют и однотонные блестящие модели, и комбинированные с наличием декоративных вставок, и варианты с принтами.",
 			"tags" : [ "JENSKAYA_ODEJDA", "PLASHI", "2KRASNIY" ],
 			"supplier" : "СКЛАД 1",
-			"images" : [ "/settings/custom/img/items/OLY_8879/1.jpg" ],
+			"images" : [ "settings/custom/img/items/OLY_8879/1.jpg" ],
 			"price" : {
 				"RUB" : 600.00
 			},
 			"sections" : ["NEW", "RAINCOATS" ],
-            addToCartButton: true,
+			addToCartButton: true,
 			"productDataSheet" : {
 				"articul" : "ART-1021",
 				"sostav" : {
@@ -37,7 +37,7 @@ function getItems() {
 			},
 			"minCount" : 1,
 			"maxCount" : 1251
-        },
+		},
 		"ART-1021" : {
 			"name" : {
 				ru : "ПЛАЩ С КРУЖЕВОМ"
@@ -123,14 +123,14 @@ function getItems() {
 			"minCount" : 0,
 			"maxCount" : 1251
 		},
-        "ART-1022" : {
+		"ART-1022" : {
 			"name" : "ПЛАЩ",
 			"longName" : "Плащ женский, с укороченным рукавом ART-1022",
 			"description" : "Плащ женский пошит из блестящих тканей разных цветов. В модных коллекциях на весну присутствуют и однотонные блестящие модели, и комбинированные с наличием декоративных вставок, и варианты с принтами.",
 			"tags" : [ "JENSKAYA_ODEJDA", "PLASHI", "KRASNIY" ],
 			"supplier" : "СКЛАД 2",
 			//"images" : [ "@ITM02[0]", "@ITM02[1]", "@ITM02[2]" ],
-            "images" : [ "@ITM03[0]" ],
+			"images" : [ "@ITM03[0]" ],
 			"price" : function(options) {
 				return {
 					"USD" : 22.50,
@@ -188,7 +188,7 @@ function getItems() {
 			"minCount" : 0,
 			"maxCount" : 1251
 		},
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		"ART-1023" : {
 			"name" : "ПЛАЩ",
 			"longName" : "Плащ женский, с укороченным рукавом ART-1022",
@@ -196,7 +196,7 @@ function getItems() {
 			"tags" : [ "JENSKAYA_ODEJDA", "PLASHI", "KRASNIY" ],
 			"supplier" : "СКЛАД 2",
 			//"images" : [ "@ITM02[0]", "@ITM02[1]", "@ITM02[2]" ],
-            "images" : [ "settings/custom/img/items/01/1.jpg", "settings/custom/img/items/01/2.jpg" ],
+			"images" : [ "settings/custom/img/items/01/1.jpg", "settings/custom/img/items/01/2.jpg" ],
 			"price" : function(options) {
 				return {
 					"USD" : 22.50,
@@ -254,8 +254,8 @@ function getItems() {
 			"minCount" : 0,
 			"maxCount" : 1251
 		},
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        "R10001" : {
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		"R10001" : {
 			"name" : {
 				ru : "ПЛАЩ С КРУЖЕВОМ"
 			},
@@ -341,7 +341,7 @@ function getItems() {
 			"maxCount" : 1251
 		},
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-        "R10011" : {
+		"R10011" : {
 			"name" : {
 				ru : "ПЛАЩ С КРУЖЕВОМ"
 			},
@@ -427,7 +427,7 @@ function getItems() {
 			"maxCount" : 1251
 		},
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-        "R10022" : {
+		"R10022" : {
 			"name" : {
 				ru : "ПЛАЩ С КРУЖЕВОМ"
 			},
@@ -513,6 +513,6 @@ function getItems() {
 			"maxCount" : 1251
 		},
 	};
-    //
-    return items;
+	//
+	return items;
 }

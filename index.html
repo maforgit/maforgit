@@ -4,46 +4,45 @@
 To run locally in Chrome: --allow-file-access-from-files
 To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy = false
  -->
+
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link id="favicon" rel="icon">
+	<link id="favicon" rel="icon">
 
-<link rel="stylesheet/less" href="assets/grid12.css">
-<link rel="stylesheet/less" href="assets/style.css" />
-<link rel="stylesheet/less" href="settings/custom.css">
+	<link rel="stylesheet/less" href="assets/grid12.less">
+	<link rel="stylesheet/less" href="assets/style.less">
+	<link rel="stylesheet/less" href="settings/custom.less">
 
-<script>
-	less = {
-		strictMath : true
-	};
-</script>
-<link rel="stylesheet" href="assets/zoom/css/magnify.css">
-<script src="assets/less.min.js" type="text/javascript"></script>
-<script src="assets/jquery-3.0.0.min.js"></script>
-<script src="assets/zoom/js/jquery.magnify.js"></script>
-<script src="assets/lz-string.min.js"></script>
-<script src="assets/common-utils.js"></script>
-<script src="assets/resource-utils.js"></script>
-<script src="settings/js/color_list.js"></script>
-<script src="settings/js/layout.js"></script>
-<script src="settings/js/colors.js"></script>
-<script src="settings/js/fonts.js"></script>
-<script src="settings/js/currencies.js"></script>
-<script src="settings/js/currencies_symbols.js"></script>
-<script src="settings/js/languages.js"></script>
-<script src="settings/js/item_options_values.js"></script>
-<script src="settings/js/item_options.js"></script>
-<script src="settings/js/order_store_details.js"></script>
-<script src="settings/js/order_customer_details.js"></script>
-<script src="settings/js/order_options.js"></script>
-<script src="settings/js/resources.js"></script>
-<script src="settings/js/sections.js"></script>
-<script src="settings/js/payment_service_providers.js"></script>
-<script src="settings/js/items.js"></script>
+	<script>
+		less = {
+			strictMath: true
+		};
+
+	</script>
+
+	<script src="assets/less.min.js"></script>
+	<script src="settings/js/color_list.js"></script>
+	<script src="settings/js/layout.js"></script>
+	<script src="settings/js/colors.js"></script>
+	<script src="settings/js/fonts.js"></script>
+	<script src="settings/js/currencies.js"></script>
+	<script src="settings/js/currencies_symbols.js"></script>
+	<script src="settings/js/languages.js"></script>
+	<script src="settings/js/item_options_values.js"></script>
+	<script src="settings/js/item_options.js"></script>
+	<script src="settings/js/order_store_details.js"></script>
+	<script src="settings/js/order_customer_details.js"></script>
+	<script src="settings/js/order_options.js"></script>
+	<script src="settings/js/resources.js"></script>
+	<script src="settings/js/sections.js"></script>
+	<script src="settings/js/payment_service_providers.js"></script>
+	<script src="settings/js/items.js"></script>
+
 </head>
+
 <body onresize="onResizeHandler()">
 	<img id="loading" width="600px" height="600px" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);" src="assets/loading.gif">
 	<!-- ---------------------------------------------------------------------------------------- -->
@@ -72,9 +71,7 @@ To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy
 				<div class="ribbon-wrapper ribbon-wrapper-right" style="display: none;">
 					<div class="ribbon ribbon-right">-30%</div>
 				</div>
-				<h3 class="productName"></h3>
-
-				${extra}
+				<h3 class="productName"></h3> ${extra}
 
 				<div class="inCart noSelect bottomIcon">
 					<span class="cartChr fontawesome20px"></span><span class="badge"></span>
@@ -122,7 +119,9 @@ To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy
 								</tr>
 							</table>
 							<div class="quantityBlock">
-								<input type="button" value="−" class="quantityMinus" onclick="simpleClickPlusMinusHandler(event, -1)"> <input type="number" step="1" min="1" class="addToCartCountInput" onkeydown="if(event.keyCode == 109 || event.keyCode == 189) event.preventDefault()" onchange="addToCartCountInputHandler(event)"> <input type="button" value="+" class="quantityPlus" onclick="simpleClickPlusMinusHandler(event, +1)">
+								<input type="button" value="−" class="quantityMinus" onclick="simpleClickPlusMinusHandler(event, -1)">
+								<input type="number" step="1" min="1" class="addToCartCountInput" onkeydown="if(event.keyCode == 109 || event.keyCode == 189) event.preventDefault()" onchange="addToCartCountInputHandler(event)">
+								<input type="button" value="+" class="quantityPlus" onclick="simpleClickPlusMinusHandler(event, +1)">
 							</div>
 						</form>
 						<div class="instancesHolder" style="display: none;">
@@ -158,7 +157,8 @@ To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy
 		<section id="block_order">
 			<div id="deliveryOptions"></div>
 			<div id="orderHolder">
-				<br> <br>
+				<br>
+				<br>
 				<div class="dashedLine noPrint"></div>
 				<div class="fontawesome20px order_cutter noPrint">&#xf0c4;</div>
 				<div style="margin-top: 20px;"></div>
@@ -257,11 +257,13 @@ To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy
 
 		<section id="block_checkout">
 			<div id="checkoutOptions"></div>
-			<br> <br>
+			<br>
+			<br>
 			<form id="checkoutForm" method="post" target="_blank">
 				<table class="buttonCheckout noSelect">
 					<tr>
-						<td><strong id="buttonCheckoutTitle"></strong><br> <span id="buttonCheckoutDetails"></span></td>
+						<td><strong id="buttonCheckoutTitle"></strong>
+							<br> <span id="buttonCheckoutDetails"></span></td>
 						<td id="buttonCheckoutPrice"></td>
 						<td>&rsaquo;</td>
 					</tr>
@@ -308,5 +310,12 @@ To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy
 	</div>
 	<div id="itemsHtmlHolder" hidden></div>
 </body>
+<script src="assets/lz-string.min.js"></script>
+<script src="assets/jquery-3.0.0.min.js"></script>
+<script src="assets/common-utils.js"></script>
+<script src="assets/resource-utils.js"></script>
 <script src="assets/utils.js"></script>
+<link rel="stylesheet" href="assets/zoom/css/magnify.css">
+<script src="assets/zoom/js/jquery.magnify.js"></script>
+
 </html>

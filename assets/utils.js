@@ -2151,10 +2151,10 @@ function updateItemUI(item) {
 	cartSection['items'] = _cartItems;
 	//
 	var sectionNameEl = cartSectionEl.getElementsByClassName('sectionName')[0];
-	txt(sectionNameEl, cartSection, 'name', [_totalQuantity, formatMoneyValueWithoutCurrencySymbol(_total)]);
+	txt(sectionNameEl, cartSection, 'name', [_totalQuantity, formatMoneyValue(_total)]);
 	//
 	var sectionDescriptionEl = cartSectionEl.getElementsByClassName('sectionDescription')[0];
-	txt(sectionDescriptionEl, cartSection, 'description', [_totalQuantity, formatMoneyValueWithoutCurrencySymbol(_total)]);
+	txt(sectionDescriptionEl, cartSection, 'description', [_totalQuantity, formatMoneyValue(_total)]);
 	//
 	var cartSectionIndex = _sectionsKeysArray.indexOf('ID_CART');
 	for (var i = cartSectionIndex; i < _sectionsKeysArray.length; i++) {
