@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<!--
+To run locally in Chrome: --allow-file-access-from-files
+To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy = false
+ -->
+
+<head>
+	<script>
+		'use strict';
+
+		loadFile('../index.html', afterIndexHtmlLoaded);
+		//
+		function loadFile(file, callback) {
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if (callback !== undefined)
+						callback(file, xhr.responseText);
+				}
+			}
+			xhr.open("GET", file, true);
+			xhr.send();
+		}
+
+		function afterIndexHtmlLoaded(file, text) {
+			var indexHtmlHolderEl = byId('indexHtmlHolder');
+			indexHtmlHolderEl.innerHTML = text;
+			//
+			//
+			//
+			var linksLess = indexHtmlHolderEl.querySelectorAll("link[rel='stylesheet/less'][href^='assets/']");
+			var nLess = 0;
+			for (var i = 0; i < linksLess.length; i++) {
+				var link = linksLess[i];
+				var href = link['href'];
+				//
+				loadFile(href, function(file, text) {
+					var newEl = document.createElement('style');
+					newEl.setAttribute('type', 'stylesheet/less');
+					linksLess[nLess].parentNode.replaceChild(newEl, linksLess[nLess]);
+					newEl.textContent = text;
+					nLess++;
+				});
+			}
+			//
+			//
+			//
+			var linksCss = indexHtmlHolderEl.querySelectorAll("link[rel='stylesheet/css'][href^='assets/']");
+			var nCss = 0;
+			for (var i = 0; i < linksCss.length; i++) {
+				var link = linksCss[i];
+				var href = link['href'];
+				//
+				loadFile(href, function(file, text) {
+					var newEl = document.createElement('style');
+					linksCss[nCss].parentNode.replaceChild(newEl, linksCss[nCss]);
+					newEl.textContent = text;
+					nCss++;
+				});
+			}
+			//
+			//
+			//
+			var linksScript = indexHtmlHolderEl.querySelectorAll("script[src^='assets/']");
+			var nScript = 0;
+			for (var i = 0; i < linksScript.length; i++) {
+				var link = linksScript[i];
+				var href = link['src'];
+				//
+				loadFile(href, function(file, text) {
+					var newEl = document.createElement('script');
+					linksScript[nScript].parentNode.replaceChild(newEl, linksScript[nScript]);
+					newEl.textContent = text;
+					nScript++;
+				});
+			}
+			//
+			//
+			//
+			var linksImg = indexHtmlHolderEl.querySelectorAll("img[src^='assets/']");
+			var nImg = 0;
+			for (var i = 0; i < linksImg.length; i++) {
+				var link = linksImg[i];
+				var href = link['src'];
+				//
+				loadFile(href, function(file, text) {
+					imgUrl2dataUrl(linksImg[nImg]);
+					nImg++;
+				});
+			}
+		}
+
+
+		function byId(id) {
+			return document.getElementById(id);
+		}
+
+		function imgUrl2dataUrl(img) {
+			var canvas = document.createElement('canvas');
+			canvas.width = img.naturalWidth;
+			canvas.height = img.naturalHeight;
+			var context = canvas.getContext('2d');
+			context.drawImage(img, 0, 0);
+			img.src = canvas.toDataURL();
+		}
+
+	</script>
+</head>
+
+<body>
+	<div id="indexHtmlHolder" hidden></div>
+</body>
+
+</html>
