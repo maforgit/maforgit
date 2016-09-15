@@ -444,6 +444,7 @@ function getItems() {
 				"size" : null,
 				"color" : null
 				},
+			"colorAndSize" : { // Геннадий, эта строка отсутствовала
 				blue : {
 					"48" : true,
 					"50" : false,
@@ -465,7 +466,7 @@ function getItems() {
 					"54" : false,
 					"56" : true
 				}
-			, // Геннадий, перед этой запятой у вас стояла лишняя скобка
+			},
 			"productDataSheet" : {
 				"articul" : "ART-М5136",
 				"sostav" : {
