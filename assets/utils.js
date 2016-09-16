@@ -251,7 +251,9 @@ function generateSupplierHtml(supplier, products) {
 
 function downloadShortcutToOrder() {
 	var orderUrl = getOrderUrl();
+	//<!--
 	var html = '<!DOCTYPE HTML><html><head><meta http-equiv="refresh" content="0;url=' + orderUrl + '"><script type="text/javascript">window.location.href="' + orderUrl + '"</script></head></html>';
+	//-->
 	var fileName = getFileNameDownloadShortcutToOrder();
 	var blob = new Blob([html], {
 		type: "text/html"
@@ -494,28 +496,51 @@ function init() {
 		if (_psKeys.length !== 0)
 			_paymentSystemsCurrentKey = _psKeys[0];
 		//
-	less.modifyVars({
-		"@colorHeaderLink": _colors['colorHeaderLink'],
-		"@colorHeaderLinkSelected": _colors['colorHeaderLinkSelected'],
-		//
-		"@headerBarBackground": _colors['headerBarBackground'],
-		"@headerBarDivider": _colors['headerBarDivider'],
-		"@menuLinkSelectedColor": _colors['menuLinkSelectedColor'],
-		"@menuLinkColor": _colors['menuLinkColor'],
-		//
-		"@itemBarCartColor": _colors['itemBarCartColor'],
-		"@itemBarCartColorHover": _colors['itemBarCartColorHover'],
-		"@itemBarBadgeBackground": _colors['itemBarBadgeBackground'],
-		"@itemBarBadgeColor": _colors['itemBarBadgeColor'],
-		"@itemBarArrowColor": _colors['itemBarArrowColor'],
-		//
-		"@verticalGapPx": _layout['verticalGapPx'] + 'px',
-		"@multiColumnMaxWidthPx": _layout['multiColumnMaxWidthPx'] + 'px',
-		"@singleColumnMaxWidthPx": _layout['singleColumnMaxWidthPx'] + 'px',
-		"@multiColumnHorizontalGapPx": _layout['multiColumnHorizontalGapPx'] + 'px',
-		"@singleColumnHorizontalMarginPx": _layout['singleColumnHorizontalMarginPx'] + 'px'
-	});
-	less.refreshStyles();
+	var options = {
+		modifyVars: {
+			"@colorHeaderLink": _colors['colorHeaderLink'],
+			"@colorHeaderLinkSelected": _colors['colorHeaderLinkSelected'],
+			//
+			"@headerBarBackground": _colors['headerBarBackground'],
+			"@headerBarDivider": _colors['headerBarDivider'],
+			"@menuLinkSelectedColor": _colors['menuLinkSelectedColor'],
+			"@menuLinkColor": _colors['menuLinkColor'],
+			//
+			"@itemBarCartColor": _colors['itemBarCartColor'],
+			"@itemBarCartColorHover": _colors['itemBarCartColorHover'],
+			"@itemBarBadgeBackground": _colors['itemBarBadgeBackground'],
+			"@itemBarBadgeColor": _colors['itemBarBadgeColor'],
+			"@itemBarArrowColor": _colors['itemBarArrowColor'],
+			//
+			"@verticalGapPx": _layout['verticalGapPx'] + 'px',
+			"@multiColumnMaxWidthPx": _layout['multiColumnMaxWidthPx'] + 'px',
+			"@singleColumnMaxWidthPx": _layout['singleColumnMaxWidthPx'] + 'px',
+			"@multiColumnHorizontalGapPx": _layout['multiColumnHorizontalGapPx'] + 'px',
+			"@singleColumnHorizontalMarginPx": _layout['singleColumnHorizontalMarginPx'] + 'px'
+		}
+	};
+
+	var lessInlineEls = document.head.querySelectorAll("style[type='text/z-less']");
+	if (lessInlineEls.length == 0) {
+		less.modifyVars(options.modifyVars);
+		less.refreshStyles();
+	} else {
+		var n = 0;
+		for (var i = 0; i < lessInlineEls.length; i++) {
+			var lessInlineEl = lessInlineEls[i];
+			var lessInput = lessInlineEl.textContent;
+			less.render(lessInput, options)
+				.then(function (output) {
+					var lessInlineEl = lessInlineEls[n];
+					var styleEl = document.createElement('style');
+						styleEl.textContent = output.css;
+						styleEl.type = 'text/css';
+						lessInlineEl.parentElement.replaceChild(styleEl, lessInlineEl);
+						n++;
+					},
+					function (error) {console.log(error);});
+		}
+	}
 	//
 	_savedInnerWidth = innerWidth;
 }
@@ -1655,8 +1680,9 @@ function downloadOrder() {
 		var quantitySignEl = quantitySignEls[i];
 		quantitySignEl.style.display = 'none';
 	}
-	//
+	//<!--
 	var s = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>' + _orderNo + ' - ' + _orderDate + '</title></head>';
+	//-->
 	s += orderEl.outerHTML;
 	s += '</html>';
 	s = replaceAll(s, '<input', '<div');

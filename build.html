@@ -6,11 +6,116 @@ To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy
  -->
 
 <head>
+	<script src="inline_fragments.js"></script>
+
 	<script>
 		'use strict';
 
-		loadFile('../index.html', afterIndexHtmlLoaded);
 		//
+		var _map = {};
+		//
+		var inline_fragments = getInlineFragments();
+		//
+		var last = Object.getOwnPropertyNames(inline_fragments).length - 1;
+		var n = 0;
+		//
+		for (var file in inline_fragments) {
+			if (!inline_fragments.hasOwnProperty(file))
+				continue;
+
+			var inline_fragment = inline_fragments[file];
+			//
+			var type = inline_fragment['type'];
+			//
+			if (type == 'binary') {
+				inline_fragment['data'] = base64Encode(getBinary(file));
+				if (n == last)
+					dataPrepared();
+				n++;
+			} else {
+				loadFile(file, function(file, text) {
+					var inline_fragment = inline_fragments[file];
+					//
+					var type = inline_fragment['type'];
+					var tag = inline_fragment['tag'];
+					var replacer = inline_fragment['replacer'];
+					//
+					inline_fragment['data'] = text;
+					//
+					if (n == last)
+						dataPrepared();
+					n++;
+				});
+			}
+		}
+		//
+		function dataPrepared() {
+			loadFile('index.dev.html', afterIndexHtmlLoaded);
+		}
+
+		function afterIndexHtmlLoaded(file, text) {
+			for (var file in inline_fragments) {
+				if (!inline_fragments.hasOwnProperty(file))
+					continue;
+
+				var inline_fragment = inline_fragments[file];
+				//
+				var type = inline_fragment['type'];
+				var tag = inline_fragment['tag'];
+				var replacer = inline_fragment['replacer'];
+				var data = inline_fragment['data'];
+				//
+				tag = tag.replace('$', file);
+				replacer = replacer.replace('$', data);
+				//
+				text = text.replace(tag, replacer);
+			}
+			saveTextAsFile(text, 'index.html');
+		}
+		//
+		function byId(id) {
+			return document.getElementById(id);
+		}
+
+		function getBinary(file) {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", file, false);
+			xhr.overrideMimeType("text/plain; charset=x-user-defined");
+			xhr.send();
+			return xhr.responseText;
+		}
+
+		function base64Encode(str) {
+			var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+			var out = "",
+				i = 0,
+				len = str.length,
+				c1, c2, c3;
+			while (i < len) {
+				c1 = str.charCodeAt(i++) & 0xff;
+				if (i == len) {
+					out += CHARS.charAt(c1 >> 2);
+					out += CHARS.charAt((c1 & 0x3) << 4);
+					out += "==";
+					break;
+				}
+				c2 = str.charCodeAt(i++);
+				if (i == len) {
+					out += CHARS.charAt(c1 >> 2);
+					out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+					out += CHARS.charAt((c2 & 0xF) << 2);
+					out += "=";
+					break;
+				}
+				c3 = str.charCodeAt(i++);
+				out += CHARS.charAt(c1 >> 2);
+				out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+				out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
+				out += CHARS.charAt(c3 & 0x3F);
+			}
+			return out;
+		}
+
 		function loadFile(file, callback) {
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
@@ -23,93 +128,33 @@ To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy
 			xhr.send();
 		}
 
-		function afterIndexHtmlLoaded(file, text) {
-			var indexHtmlHolderEl = byId('indexHtmlHolder');
-			indexHtmlHolderEl.innerHTML = text;
-			//
-			//
-			//
-			var linksLess = indexHtmlHolderEl.querySelectorAll("link[rel='stylesheet/less'][href^='assets/']");
-			var nLess = 0;
-			for (var i = 0; i < linksLess.length; i++) {
-				var link = linksLess[i];
-				var href = link['href'];
-				//
-				loadFile(href, function(file, text) {
-					var newEl = document.createElement('style');
-					newEl.setAttribute('type', 'stylesheet/less');
-					linksLess[nLess].parentNode.replaceChild(newEl, linksLess[nLess]);
-					newEl.textContent = text;
-					nLess++;
-				});
-			}
-			//
-			//
-			//
-			var linksCss = indexHtmlHolderEl.querySelectorAll("link[rel='stylesheet/css'][href^='assets/']");
-			var nCss = 0;
-			for (var i = 0; i < linksCss.length; i++) {
-				var link = linksCss[i];
-				var href = link['href'];
-				//
-				loadFile(href, function(file, text) {
-					var newEl = document.createElement('style');
-					linksCss[nCss].parentNode.replaceChild(newEl, linksCss[nCss]);
-					newEl.textContent = text;
-					nCss++;
-				});
-			}
-			//
-			//
-			//
-			var linksScript = indexHtmlHolderEl.querySelectorAll("script[src^='assets/']");
-			var nScript = 0;
-			for (var i = 0; i < linksScript.length; i++) {
-				var link = linksScript[i];
-				var href = link['src'];
-				//
-				loadFile(href, function(file, text) {
-					var newEl = document.createElement('script');
-					linksScript[nScript].parentNode.replaceChild(newEl, linksScript[nScript]);
-					newEl.textContent = text;
-					nScript++;
-				});
-			}
-			//
-			//
-			//
-			var linksImg = indexHtmlHolderEl.querySelectorAll("img[src^='assets/']");
-			var nImg = 0;
-			for (var i = 0; i < linksImg.length; i++) {
-				var link = linksImg[i];
-				var href = link['src'];
-				//
-				loadFile(href, function(file, text) {
-					imgUrl2dataUrl(linksImg[nImg]);
-					nImg++;
-				});
-			}
-		}
-
-
-		function byId(id) {
-			return document.getElementById(id);
-		}
-
 		function imgUrl2dataUrl(img) {
 			var canvas = document.createElement('canvas');
 			canvas.width = img.naturalWidth;
 			canvas.height = img.naturalHeight;
 			var context = canvas.getContext('2d');
 			context.drawImage(img, 0, 0);
-			img.src = canvas.toDataURL();
+			//
+			return canvas.toDataURL();
+		}
+
+		function saveTextAsFile(textToSave, fileNameToSaveAs) {
+			var textToSaveAsBlob = new Blob([textToSave], {
+				type: "text/plain"
+			});
+			var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+			var a = document.createElement('a');
+			a.download = fileNameToSaveAs;
+			a.href = textToSaveAsURL;
+			a.onclick = function(event) {
+				document.body.removeChild(event.target);
+			};
+			a.style.display = "none";
+			document.body.appendChild(a);
+			a.click();
 		}
 
 	</script>
 </head>
-
-<body>
-	<div id="indexHtmlHolder" hidden></div>
-</body>
 
 </html>

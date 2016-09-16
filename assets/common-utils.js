@@ -343,7 +343,6 @@ function saveTextAsFile(textToSave, fileNameToSaveAs) {
 	var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
 	var a = document.createElement('a');
 	a.download = fileNameToSaveAs;
-//	a.innerHTML = "Download File";
 	a.href = textToSaveAsURL;
 	a.onclick = function(event) {document.body.removeChild(event.target);};
 	a.style.display = "none";
