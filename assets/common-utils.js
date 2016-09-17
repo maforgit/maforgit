@@ -336,9 +336,9 @@ function copyText(text) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-function saveTextAsFile(textToSave, fileNameToSaveAs) {
+function saveTextAsFile(textToSave, fileNameToSaveAs, type) {
 	var textToSaveAsBlob = new Blob([ textToSave ], {
-		type : "text/plain"
+		type : type
 	});
 	var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
 	var a = document.createElement('a');

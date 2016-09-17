@@ -255,34 +255,13 @@ function downloadShortcutToOrder() {
 	var html = '<!DOCTYPE HTML><html><head><meta http-equiv="refresh" content="0;url=' + orderUrl + '"><script type="text/javascript">window.location.href="' + orderUrl + '"</script></head></html>';
 	//-->
 	var fileName = getFileNameDownloadShortcutToOrder();
-	var blob = new Blob([html], {
-		type: "text/html"
-	});
-	var url = window.URL.createObjectURL(blob);
-	var a = document.createElement('a');
-	a.download = fileName;
-	a.href = url;
-	//
-	var event = document.createEvent("HTMLEvents");
-	event.initEvent("click", false, true);
-	a.dispatchEvent(event);
+	saveTextAsFile(html, fileName, "text/html");
 }
 
 function downloadSupplierOrder(html) {
 	var fileName = getFileNameDownloadQuantityReport();
 	var BOM = "\ufeff";
-	var blob = new Blob([BOM, html], {
-		type: "text/csv;charset=utf-8"
-	});
-	var url = window.URL.createObjectURL(blob);
-	var a = document.createElement('a');
-	a.download = fileName;
-	a.href = url;
-	//
-	var event = document.createEvent("HTMLEvents");
-	event.initEvent("click", false, true);
-	a.dispatchEvent(event);
-	//
+	saveTextAsFile(BOM + html, fileName, "text/csv;charset=utf-8");
 }
 
 function init() {
@@ -1684,7 +1663,9 @@ function downloadOrder() {
 	var s = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>' + _orderNo + ' - ' + _orderDate + '</title></head>';
 	//-->
 	s += orderEl.outerHTML;
+	//<!--
 	s += '</html>';
+	//-->
 	s = replaceAll(s, '<input', '<div');
 	s = replaceAll(s, '</input', '</div');
 	s = replaceAll(s, 'clickableText', '');
@@ -1703,19 +1684,8 @@ function downloadOrder() {
 	}
 	//
 	var fileName = getFileNameDownloadOrder();
-
-	var blob = new Blob([s], {
-		type: "text/html"
-	});
-
-	var url = window.URL.createObjectURL(blob);
-	var a = document.createElement('a');
-	a.download = fileName;
-	a.href = url;
 	//
-	var event = document.createEvent("HTMLEvents");
-	event.initEvent("click", false, true);
-	a.dispatchEvent(event);
+	saveTextAsFile(s, fileName, "text/html");
 }
 
 function printOrder() {

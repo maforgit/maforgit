@@ -10,7 +10,8 @@ function getItems() {
 			"description" : "Плащ женский (с кружевом) пошит из блестящих тканей разных цветов. В модных коллекциях на весну присутствуют и однотонные блестящие модели, и комбинированные с наличием декоративных вставок, и варианты с принтами.",
 			"tags" : [ "JENSKAYA_ODEJDA", "PLASHI", "2KRASNIY" ],
 			"supplier" : "СКЛАД 1",
-			"images" : [ "/settings/custom/img/items/OLY_8879/1.jpg" ],
+//			             "settings/custom/img/items/01/1.jpg"
+			"images" : [ "settings/custom/img/items/OLY_8879/1.jpg" ],
 			"price" : {
 				"RUB" : 600.00
 			},
