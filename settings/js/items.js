@@ -35,8 +35,7 @@ function getItems() {
 				},
 				"ostatok" : "251"
 			},
-			"minCount" : 1,
-			"maxCount" : 1251
+			addToCartDefaultCount : 10
 		},
 		"ART-1021" : {
 			"name" : {
@@ -439,7 +438,7 @@ function getItems() {
 			"price" : {
 				"RUB" : 349.00
 			},
-			"sections" : [ "NEW", "RAINCOATS" ],
+			"sections" : [ "NEW", "HOME CLOTHING" ],
 			"options" : {
 				"size" : null,
 				"color" : null

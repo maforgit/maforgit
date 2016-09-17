@@ -37,20 +37,6 @@ function getSections() {
 			},
 			showInMenu: true,
 			showInCatalog: true
-				},
-		"HOME CLOTHING": {
-			"name": {
-				"en": "HOME CLOTHING",
-				"fr": "VÊTEMENTS À LA MAISON",
-				"ru": "ДОМАШНЯЯ ОДЕЖДА"
-			},
-			"description": {
-				"en": "%1 item(s)",
-				"fr": "%1 article(s)",
-				"ru": "товаров: %1"
-			},
-			showInMenu: true,
-			showInCatalog: true
 		},
 		"WHOLESALE": {
 			"name": {

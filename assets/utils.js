@@ -345,12 +345,7 @@ function init() {
 		//
 		item['itemKey'] = itemKey;
 		//
-		var instancesStr;
-		var maxCount = item['maxCount'];
-		if (maxCount == undefined || maxCount == 0)
-			instancesStr = null;
-		else
-			instancesStr = _storage.getItem('item' + '.' + itemKey);
+		var instancesStr = _storage.getItem('item' + '.' + itemKey);
 		//
 		if (instancesStr == null) {
 			item['instances'] = [];
@@ -531,14 +526,16 @@ function init() {
 			var lessInput = lessInlineEl.textContent;
 			less.render(lessInput, options)
 				.then(function (output) {
-					var lessInlineEl = lessInlineEls[n];
-					var styleEl = document.createElement('style');
+						var lessInlineEl = lessInlineEls[n];
+						var styleEl = document.createElement('style');
 						styleEl.textContent = output.css;
 						styleEl.type = 'text/css';
 						lessInlineEl.parentElement.replaceChild(styleEl, lessInlineEl);
 						n++;
 					},
-					function (error) {console.log(error);});
+					function (error) {
+						console.log(error);
+					});
 		}
 	}
 	//
@@ -874,14 +871,17 @@ function updateInstances(el, item) {
 		tdQuantityValEl.setAttribute('data-itemkey', itemKey);
 		tdQuantityValEl.setAttribute('data-instanceindex', i);
 		tdQuantityValEl.setAttribute('type', 'number');
-		tdQuantityValEl.setAttribute('min', item['minCount']);
-		tdQuantityValEl.setAttribute('max', item['maxCount']);
+		tdQuantityValEl.setAttribute('min', 0);
 		tdQuantityValEl.classList.add('quantityInput');
 		tdQuantityValEl.value = instanceQuantity;
 		tdQuantityValEl.innerHTML = instanceQuantity;
 		tdQuantityValEl.onchange = function (event) {
-			quantityInputChanged(event);
-		}
+				quantityInputChanged(event);
+			}
+			//		tdQuantityValEl.onkeydown = function (e) {
+			//			if (!((e.keyCode > 95 && e.keyCode < 106) || (e.keyCode > 47 && e.keyCode < 58) || e.keyCode == 8))
+			//				return false;
+			//		}
 		tdQuantityEl.appendChild(tdQuantityValEl);
 		//
 		var tdTotalEl = document.createElement('td');
@@ -2150,8 +2150,7 @@ function updateItemUI(item) {
 			tdQuantityValEl.setAttribute('data-itemkey', itemKey);
 			tdQuantityValEl.setAttribute('data-instanceindex', i);
 			tdQuantityValEl.setAttribute('type', 'number');
-			tdQuantityValEl.setAttribute('min', item['minCount']);
-			tdQuantityValEl.setAttribute('max', item['maxCount']);
+			tdQuantityValEl.setAttribute('min', 0);
 			tdQuantityValEl.classList.add('quantityInput');
 			tdQuantityValEl.onchange = function (event) {
 				var newInstanceQuantity = quantityInputChanged(event);
@@ -2513,6 +2512,12 @@ function quantityInputChanged(event) {
 	var oldInstanceQuantity = instance['quantity'];
 	//
 	var newInstanceQuantity = parseInt(strVal);
+	if (isNaN(newInstanceQuantity))
+		newInstanceQuantity = 1;
+	else if (newInstanceQuantity < 0)
+		newInstanceQuantity = -newInstanceQuantity;
+	//
+	quantityInputEl.value = newInstanceQuantity;
 	//
 	var instance = changeUpdateItemByInstanceIndex(item, instanceIndex, newInstanceQuantity);
 	if (instance == null)
@@ -2857,9 +2862,9 @@ function customCreateItemDetailsPage(item, sectionKey) {
 	}
 	//
 	// ADD TO CART
-	var minCount = item['minCount'];
-	var maxCount = item['maxCount'];
-	var noInputField = minCount == maxCount;
+	var addToCartDefaultCount = item['addToCartDefaultCount'];
+	//
+	var noInputField = addToCartDefaultCount == undefined;
 	//
 	var canAddToCart = item['addToCartButton'];
 	//
@@ -2870,10 +2875,9 @@ function customCreateItemDetailsPage(item, sectionKey) {
 	// ADD TO CART INPUT
 	var addToCartCountInputEl = el.getElementsByClassName('addToCartCountInput')[0];
 	addToCartCountInputEl.setAttribute('id', 'addToCartCountInput' + '.' + itemKey + '.' + sectionKey);
-	addToCartCountInputEl.setAttribute('min', minCount);
-	addToCartCountInputEl.setAttribute('max', maxCount);
+	addToCartCountInputEl.setAttribute('min', 1);
 	addToCartCountInputEl.setAttribute('step', 1);
-	addToCartCountInputEl.value = minCount;
+	addToCartCountInputEl.value = addToCartDefaultCount;
 	addToCartCountInputEl.style.display = noInputField ? 'none' : 'inline';
 	//
 	// ADD TO CART BUTTON

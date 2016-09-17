@@ -29,7 +29,7 @@
 //
 // Header bars
 //
-@headerBarBackground: red;
+@headerBarBackground: transparent;
 @headerBarDivider: transparent;
 @menuLinkColor: transparent;
 @menuLinkSelectedColor: transparent;
@@ -57,7 +57,9 @@
 	b222ox-sizing: border-box;
 	b222order: solid #ddd 1px;
 }
-
+html {
+	font-size: 16px;
+}
 body,
 h1,
 h2,
@@ -128,7 +130,7 @@ body {
 
 .headerText {
 	white-space: nowrap;
-	font-size: 18px;
+	font-size: 1.25rem;
 	line-height: @headerBarHeight;
 	font-family: menu;
 	height: @headerBarHeight;
@@ -141,21 +143,20 @@ body {
 .catalog {
 	cursor: pointer;
 	white-space: nowrap;
-	font-size: 18px;
+	font-size: 1.25rem;
 	font-family: menu;
 }
 .catalog:hover {
 	border-bottom: 1px dashed #000;
 }
-
 .catalogItemCount {
-	font-size: 18px;
+	font-size: 1.25rem;
 	font-family: menu;
 }
 .catalogCheckBox {
-	height: 15px;
-	width: 15px;
-	margin-right: 10px;
+	height: 1rem;
+	width: 1rem;
+	margin-right: 0.5rem;
 }
 
 /**********************************************************************************************/
@@ -305,20 +306,20 @@ input[type=number]::-webkit-inner-spin-button {
 }
 .sectionHeader {
 	position: relative;
-	height: 120px;
+	height: 7.5rem;
 	background-repeat: no-repeat;
 }
 .sectionName {
 	font-family: sectionName;
-	font-size: 40px;
-	line-height: 40px;
+	font-size: 2.5rem;
+	line-height: 2.5rem;
 	padding-top: 10px;
 	margin: 0;
 }
 .sectionDescription {
 	font-family: sectionDescription;
-	font-size: 20px;
-	line-height: 20px;
+	font-size: 1.25rem;
+	line-height: 1.25rem;
 }
 .header,
 .footer {
@@ -340,22 +341,22 @@ input[type=number]::-webkit-inner-spin-button {
 	text-align: center;
 	white-space: nowrap;
 	font-family: Arial;
-	font-size: 16px;
-	line-height: 20px;
+	font-size: 1rem;
+	line-height: 1rem;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
 .productNameBig {
 	cursor: pointer;
 	font-family: productNameBig;
-	font-size: 35px;
-	line-height: 35px;
+	font-size: 2rem;
+	line-height: 2rem;
 }
 .productLongName {
 	cursor: pointer;
 	font-family: productLongName;
-	font-size: 20px;
-	line-height: 20px;
+	font-size: 1.25rem;
+	line-height: 1.25rem;
 	margin-bottom: 30px;
 }
 .productDescription {
@@ -399,20 +400,6 @@ input[type=number]::-webkit-inner-spin-button {
 
 /**********************************************************************************************/
 
-.productPageTitleBar {
-	margin-bottom: 30px;
-}
-.productPageProductID {
-	position: absolute;
-	top: 5px;
-	left: 5px;
-	white-space: nowrap;
-	font-size: 12px;
-	font-family: monospace;
-}
-
-/**********************************************************************************************/
-
 .priceHolder {
 	margin-bottom: 0;
 	text-align: right;
@@ -421,8 +408,8 @@ input[type=number]::-webkit-inner-spin-button {
 	padding-bottom: 10px;
 	font-family: Arial;
 	font-weight: bold;
-	font-size: 16px;
-	line-height: 20px;
+	font-size: 1rem;
+	line-height: 1rem;
 	white-space: nowrap;
 }
 .dashedLine {
@@ -486,7 +473,7 @@ input[type=number]::-webkit-inner-spin-button {
 .quantitySign {
 	cursor: pointer;
 	font-family: fontawesome;
-	font-size: 16px;
+	font-size: 1.25rem;
 	color: @alertBackgroundColor;
 }
 
@@ -891,6 +878,9 @@ input[type=number]::-webkit-inner-spin-button {
 /* single-column mode */
 
 @media screen and (max-width: @singleColumnMaxWidthPx) {
+	html {
+		font-size: 14px;
+	}
 	.products,
 	.header,
 	.footer {
