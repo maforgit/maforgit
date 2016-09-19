@@ -11,12 +11,6 @@ function getInlineFragments() {
 			replacer: '<img id="loading" width="600px" height="600px" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);" src="data:image/gif;base64,$">'
 		},
 		//
-		'assets/fontawesome-webfont.woff': {
-			type: 'binary',
-			tag: 'src: url($);',
-			replacer: "src: url('data:application/font-woff;base64,$');"
-		},
-		//
 		// less
 		//
 		'assets/grid12.less': {
