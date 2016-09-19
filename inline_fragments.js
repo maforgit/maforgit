@@ -1,6 +1,6 @@
-'use strict';
-
 function getInlineFragments() {
+	'use strict';
+
 	return {
 		//
 		// binary
@@ -81,7 +81,7 @@ function getInlineFragments() {
 			type: 'js',
 			tag: '<script src="$"></script>',
 			replacer: '<script>$</script>'
-		},
+		}
 		//
 	};
 }

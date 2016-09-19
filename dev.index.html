@@ -1,9 +1,62 @@
 <!DOCTYPE html>
 <html>
 <!--
-To run locally in Chrome: --allow-file-access-from-files
-To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy = false
- -->
+
+
+ _|      _|  _|      _|        _|_|_|  _|_|_|_|_|    _|_|    _|_|_|    _|_|_|_|
+ _|_|  _|_|    _|  _|        _|            _|      _|    _|  _|    _|  _|
+ _|  _|  _|      _|            _|_|        _|      _|    _|  _|_|_|    _|_|_|
+ _|      _|      _|                _|      _|      _|    _|  _|    _|  _|
+ _|      _|      _|          _|_|_|        _|        _|_|    _|    _|  _|_|_|_|
+
+
+Version: 2016-09-18
+
+
+LICENSE
+-------
+
+Copyright 2016 DjXpli4c
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+RUN LOCALLY (file:// URL)
+-------------------------
+
+You can run MY STORE also locally in browser without server:
+file://[path-to-this-file]/index.html
+
+Cross-Origin Resource Sharing (CORS) issue:
+MY STORE widely use CORS as method of performing XMLHttpRequests across domains.
+To run locally you need to change local files security policy:
+
+Chrome
+------
+
+1) Close all running Chrome instances first.
+2) Start the Chrome executable with a command line flag:
+
+chrome --allow-file-access-from-files
+
+Firefox
+-------
+
+1) Go to about:config
+2) Set 'security.fileuri.strict_origin_policy' preference to 'false'
+
+
+-->
 
 <head>
 	<meta charset="utf-8">
@@ -16,6 +69,7 @@ To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy
 			font-family: fontawesome;
 			src: url(assets/fontawesome-webfont.woff);
 		}
+
 	</style>
 	<link rel="stylesheet/less" href="assets/grid12.less">
 	<link rel="stylesheet/less" href="assets/style.less">

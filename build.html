@@ -12,7 +12,6 @@ To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy
 	<script>
 		'use strict';
 
-		//
 		var _map = {};
 		//
 		var inline_fragments = getInlineFragments();
@@ -71,6 +70,7 @@ To run locally in Firefox: about:config -> security.fileuri.strict_origin_policy
 				//
 				text = text.replace(tag, replacer);
 			}
+			//
 			saveTextAsFile(text, 'index.html');
 		}
 		//
