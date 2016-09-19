@@ -613,18 +613,18 @@ function processUrlParameters() {
 	var itemKey = _urlParams['item'];
 	if (sectionKey !== undefined)
 		xopen(sectionKey, itemKey);
+	var pos = location.href.indexOf('#');
+	if(pos != -1) {
+		sectionKey = location.href.substring(pos+1);
+		jump('sectionAnchor.' + sectionKey);
+	}
 }
 
 function xopen(sectionKey, itemKey) {
-	var url = location.href.split('?')[0];
-	if (itemKey === undefined) {
-		location.href = url + '#' + sectionKey;
-		//var sectionId = 'section' + '.' + sectionKey;
-		//var sectionEl = byId(sectionId);
-		//
-		//jump(sectionId);
-		//sectionEl.scrollIntoView(true);
-	} else {
+	setSectionVisible(sectionKey, true);
+	if (itemKey === undefined)
+		jump('sectionAnchor.' + sectionKey);
+	else {
 		var needOpen = true;
 		if (_currentThumbnailEl !== null) {
 			var currentItemKey = _currentThumbnailEl.dataset.itemkey;
@@ -635,6 +635,10 @@ function xopen(sectionKey, itemKey) {
 		if (needOpen) {
 			var thumbnailId = 'thumbnail.' + sectionKey + '.' + itemKey;
 			var thumbnailEl = byId(thumbnailId);
+			if(thumbnailEl == null) {
+				jump('sectionAnchor.' + sectionKey);
+				return;
+			}
 			//
 			var event = document.createEvent("HTMLEvents");
 			event.initEvent("click", false, true);
@@ -669,6 +673,9 @@ function setLang(langKeyToSet) {
 	}
 	//
 	_langKey = langKeyToSet;
+	_fonts = getFonts(_langKey);
+	setFonts();
+
 	save('langKey', _langKey);
 	//
 	var langSpan = byId('lang_' + _langKey);
@@ -1187,7 +1194,6 @@ function createSection(sectionKey, section, customCreateThumbnail) {
 				spanNameEl.onclick = function (event) {
 					var el = event.target;
 					var sectionkey = el.getAttribute('data-sectionkey');
-					//alert(el + '  ' + sectionkey);
 					setSectionVisible(sectionkey, true);
 					jump('sectionAnchor.' + sectionkey);
 				};
@@ -2205,8 +2211,29 @@ function save(key, obj) {
 	_storage.setItem(key, obj instanceof Object ? JSON.stringify(obj, null, 0) : obj);
 }
 
+function displayAboutComment(d) {
+	if (!d)
+		return;
+	if (d.nodeType == 8) {
+		var el = document.createElement('pre');
+		el.setAttribute('style', 'tab-size:4; -moz-tab-size:4;');
+		el.innerHTML = d.data;
+		var body = document.getElementsByTagName("html")[0];
+		body.innerHTML = '';
+		body.appendChild(el);
+		return;
+	}
+	if (!d.childNodes)
+		return;
+	for (var i = 0; i < d.childNodes.length; i++)
+		displayAboutComment(d.childNodes[i]);
+}
+
 /////////////////////////////////////  E N D  /////////////////////////////////////////////////
 _urlParams = getUrlParams(location.search);
+var aboutParam = _urlParams['about'];
+if (aboutParam !== undefined)
+	displayAboutComment(document);
 //
 _resources = getResources();
 //
@@ -2216,7 +2243,6 @@ _headerImageEl.src = getImage(_resources['headerImage']);
 /* Load settings data */
 _color_list = getColorList();
 _colors = getColors();
-_fonts = getFonts();
 _currencies = getCurrencies();
 _currencies_symbols = getCurrenciesSymbols();
 _itemOptions = getItemOptions();
@@ -2228,7 +2254,6 @@ _sections = getSections();
 _orderStoreDetails = getOrderStoreDetails();
 _items = getItems();
 //
-setFonts();
 //
 addEventListener('click', function (event) {
 	closeColorWindow();
@@ -2947,13 +2972,12 @@ function customCreateItemDetailsPage(item, sectionKey) {
 }
 
 function setFonts() {
-	var newStyle = document.createElement('style');
-	document.head.appendChild(newStyle);
+	var s = '';
 	for (var fontFamily in _fonts) {
 		if (!_fonts.hasOwnProperty(fontFamily))
 			continue;
 		var fontProperties = _fonts[fontFamily];
-		var s = "@font-face {font-family: '" + fontFamily + "';";
+		s += "@font-face {font-family: '" + fontFamily + "';";
 		for (var key in fontProperties) {
 			if (!fontProperties.hasOwnProperty(key))
 				continue;
@@ -2961,8 +2985,8 @@ function setFonts() {
 			s += key + ': ' + value + ';';
 		}
 		s += '}';
-		newStyle.appendChild(document.createTextNode(s));
 	}
+	byId('fonts').textContent = s;
 }
 
 //================================================================================================================================

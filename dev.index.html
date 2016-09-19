@@ -13,8 +13,8 @@
 Version: 2016-09-19
 
 
-LICENSE
--------
+I LICENSE
+---------
 
 Copyright 2016 DjXpli4c
 
@@ -30,9 +30,43 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+II DIRECTORY STRUCTURE
+----------------------
 
-RUN LOCALLY (file:// URL)
--------------------------
+			 / [site root]
+			 |
+			 |-- /settings
+			 |   |
+			 |   |-- /custom (optional, folder (with arbitrary name) for custom files, put your stuff here)
+			 |   |
+			 |   |-- /js
+			 |   |   |
+			 |   |   |-- color_list.js
+			 |   |   |-- colors.js (colors definitions)
+			 |   |   |-- currencies_symbols.js
+			 |   |   |-- currencies.js (currencies definitions)
+			 |   |   |-- fonts.js (fonts definitions)
+			 |   |   |-- item_options_values.js
+			 |   |   |-- item_options.js
+			 |   |   |-- items.js (products definitions)
+			 |   |   |-- languages.js (languages definitions)
+			 |   |   |-- layout.js (page layout settings)
+			 |   |   |-- order_customer_details.js
+			 |   |   |-- order_options.js
+			 |   |   |-- order_store_details.js
+			 |   |   |-- payment_service_providers.js
+			 |   |   |-- resources.js (key-value storage for translated strings, icons, etc.)
+			 |   |   +-- sections.js (sections definitions)
+			 |   |
+			 |   |-- custom.less (optional, put your custom styles (css/less))
+			 |   |
+			 |   +-- images.html (optional HTML <table>-based key-value storage for custom images)
+			 |
+			 +-- index.html (distribution file, don't change!)
+
+
+III RUN LOCALLY (file:// URL)
+-----------------------------
 
 You can run MY STORE also locally in browser without server:
 file://[path-to-this-file]/index.html
@@ -41,20 +75,32 @@ Cross-Origin Resource Sharing (CORS) issue:
 MY STORE widely use CORS as method of performing XMLHttpRequests across domains.
 To run locally you need to change local files security policy:
 
-Chrome
-------
+#Chrome:
 
 1) Close all running Chrome instances first.
 2) Start the Chrome executable with a command line flag:
 
 chrome --allow-file-access-from-files
 
-Firefox
--------
+#Firefox:
 
 1) Go to about:config
 2) Set 'security.fileuri.strict_origin_policy' preference to 'false'
 
+
+IV URL PARAMETERS
+-----------------
+
+about                 - display information about MY STORE;
+section=[section key] - scroll page to specified section;
+item=[item key]       - scroll page to specified item (section parameter is required);
+clearCart             - clear cart.
+
+
+V NAVIGATION
+------------
+
+#[section key] to scroll document to specified section
 
 -->
 
@@ -71,6 +117,7 @@ Firefox
 		}
 
 	</style>
+	<style id="fonts"></style>
 	<link rel="stylesheet/less" href="assets/grid12.less">
 	<link rel="stylesheet/less" href="assets/style.less">
 	<link rel="stylesheet/less" href="settings/custom.less">

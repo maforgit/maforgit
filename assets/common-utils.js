@@ -10,7 +10,7 @@ function byTag(tag) {
 
 function loadImage(imageEl, src) {
 	var image = new Image();
-	image.onload = function() {
+	image.onload = function () {
 		imageEl.src = this.src;
 	};
 	image.src = src;
@@ -173,7 +173,7 @@ function ajaxPost(url, name, json, callback, error) {
 	//
 	xhr.open("POST", url);
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.onreadystatechange = function() {
+	xhr.onreadystatechange = function () {
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200 || xhr.status == 0)
 				callback(xhr.responseText);
@@ -189,7 +189,7 @@ function ajaxPost(url, name, json, callback, error) {
 
 function loadHtmlFile(el, file, callback) {
 	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function() {
+	xhr.onreadystatechange = function () {
 		if (xhr.readyState == 4) {
 			el.innerHTML = xhr.responseText;
 			if (callback !== undefined)
@@ -203,19 +203,19 @@ function loadHtmlFile(el, file, callback) {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 function getUrlParams(search) {
-	var parse = function(params, pairs) {
-		var pair = pairs[0];
-		var parts = pair.split('=');
-		var key = decodeURIComponent(parts[0]);
-		var value = decodeURIComponent(parts.slice(1).join('='));
-		// Handle multiple parameters of the same name
-		if (typeof params[key] === "undefined")
-			params[key] = value;
-		else
-			params[key] = [].concat(params[key], value);
-		return pairs.length == 1 ? params : parse(params, pairs.slice(1))
-	}
-	//
+	var parse = function (params, pairs) {
+			var pair = pairs[0];
+			var parts = pair.split('=');
+			var key = decodeURIComponent(parts[0]);
+			var value = decodeURIComponent(parts.slice(1).join('='));
+			// Handle multiple parameters of the same name
+			if (typeof params[key] === "undefined")
+				params[key] = value;
+			else
+				params[key] = [].concat(params[key], value);
+			return pairs.length == 1 ? params : parse(params, pairs.slice(1))
+		}
+		//
 	return search.length == 0 ? {} : parse({}, search.substr(1).split('&'));
 }
 
@@ -253,7 +253,7 @@ function replaceAll(str, find, replace) {
 	return str.replace(new RegExp(find, 'g'), replace);
 }
 
-function reverse(s){
+function reverse(s) {
 	return s.split("").reverse().join("");
 }
 
@@ -265,7 +265,7 @@ function strcmp(a, b) {
 
 function sortObj(obj) {
 	const ordered = {};
-	Object.keys(obj).sort().forEach(function(key) {
+	Object.keys(obj).sort().forEach(function (key) {
 		ordered[key] = obj[key];
 	});
 	return ordered;
@@ -273,7 +273,7 @@ function sortObj(obj) {
 
 function cloneObj(obj) {
 	const ordered = {};
-	Object.keys(obj).forEach(function(key) {
+	Object.keys(obj).forEach(function (key) {
 		ordered[key] = obj[key];
 	});
 	return ordered;
@@ -281,27 +281,27 @@ function cloneObj(obj) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-(function($) {
-	var getUnqueuedOpts = function(opts) {
+(function ($) {
+	var getUnqueuedOpts = function (opts) {
 		return {
-			queue : false,
-			duration : opts.duration,
-			easing : opts.easing
+			queue: false,
+			duration: opts.duration,
+			easing: opts.easing
 		};
 	};
-	$.fn.showDown = function(opts) {
+	$.fn.showDown = function (opts) {
 		opts = opts || {};
 		$(this).hide().slideDown(opts).animate({
-			opacity : 1
+			opacity: 1
 		}, getUnqueuedOpts(opts));
 	};
-	$.fn.hideUp = function(opts) {
+	$.fn.hideUp = function (opts) {
 		opts = opts || {};
 		$(this).show().slideUp(opts).animate({
-			opacity : 0
+			opacity: 0
 		}, getUnqueuedOpts(opts));
 	};
-	$.fn.verticalFade = function(opts) {
+	$.fn.verticalFade = function (opts) {
 		opts = opts || {};
 		if ($(this).is(':visible')) {
 			$(this).hideUp(opts);
@@ -337,14 +337,16 @@ function copyText(text) {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 function saveTextAsFile(textToSave, fileNameToSaveAs, type) {
-	var textToSaveAsBlob = new Blob([ textToSave ], {
-		type : type
+	var textToSaveAsBlob = new Blob([textToSave], {
+		type: type
 	});
 	var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
 	var a = document.createElement('a');
 	a.download = fileNameToSaveAs;
 	a.href = textToSaveAsURL;
-	a.onclick = function(event) {document.body.removeChild(event.target);};
+	a.onclick = function (event) {
+		document.body.removeChild(event.target);
+	};
 	a.style.display = "none";
 	document.body.appendChild(a);
 	a.click();
@@ -352,10 +354,10 @@ function saveTextAsFile(textToSave, fileNameToSaveAs, type) {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // polyfil for IE
 if (!String.prototype.startsWith) {
-	String.prototype.startsWith = function(searchString, position){
-	  position = position || 0;
-	  return this.substr(position, searchString.length) === searchString;
-  };
+	String.prototype.startsWith = function (searchString, position) {
+		position = position || 0;
+		return this.substr(position, searchString.length) === searchString;
+	};
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -385,56 +387,58 @@ https://gist.github.com/zziuni/3741933
 	stun.xten.com
 */
 
-function getIPs(stunUrl, callback){
+function getIPs(stunUrl, callback) {
 	var ip_dups = {};
 
 	//compatibility for firefox and chrome
-	var RTCPeerConnection = window.RTCPeerConnection
-		|| window.mozRTCPeerConnection
-		|| window.webkitRTCPeerConnection;
+	var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
 	var useWebKit = !!window.webkitRTCPeerConnection;
 
 	//bypass naive webrtc blocking using an iframe
-	if(!RTCPeerConnection){
+	if (!RTCPeerConnection) {
 		//NOTE: you need to have an iframe in the page right above the script tag
 		//
 		//<iframe id="iframe" sandbox="allow-same-origin" style="display: none"></iframe>
 		//<script>...getIPs called in here...
 		//
 		var win = iframe.contentWindow;
-		RTCPeerConnection = win.RTCPeerConnection
-			|| win.mozRTCPeerConnection
-			|| win.webkitRTCPeerConnection;
+		RTCPeerConnection = win.RTCPeerConnection || win.mozRTCPeerConnection || win.webkitRTCPeerConnection;
 		useWebKit = !!win.webkitRTCPeerConnection;
 	}
 
 	//minimal requirements for data connection
 	var mediaConstraints = {
-		optional: [{RtpDataChannels: true}]
+		optional: [{
+			RtpDataChannels: true
+		}]
 	};
 	// var servers = {iceServers: [{urls: "stun:stun.ekiga.net"}]};
-	var servers = {iceServers: [{urls: stunUrl}]};
+	var servers = {
+		iceServers: [{
+			urls: stunUrl
+		}]
+	};
 
 	//construct a new RTCPeerConnection
 	var pc = new RTCPeerConnection(servers, mediaConstraints);
 
-	function handleCandidate(candidate){
+	function handleCandidate(candidate) {
 		//match just the IP address
 		var ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
 		var ip_addr = ip_regex.exec(candidate)[1];
 
 		//remove duplicates
-		if(ip_dups[ip_addr] === undefined)
+		if (ip_dups[ip_addr] === undefined)
 			callback(ip_addr);
 
 		ip_dups[ip_addr] = true;
 	}
 
 	//listen for candidate events
-	pc.onicecandidate = function(ice){
+	pc.onicecandidate = function (ice) {
 
 		//skip non-candidate events
-		if(ice.candidate)
+		if (ice.candidate)
 			handleCandidate(ice.candidate.candidate);
 	};
 
@@ -442,20 +446,20 @@ function getIPs(stunUrl, callback){
 	pc.createDataChannel("");
 
 	//create an offer sdp
-	pc.createOffer(function(result){
+	pc.createOffer(function (result) {
 
 		//trigger the stun server request
-		pc.setLocalDescription(result, function(){}, function(){});
+		pc.setLocalDescription(result, function () {}, function () {});
 
-	}, function(){});
+	}, function () {});
 
 	//wait for a while to let everything done
-	setTimeout(function(){
+	setTimeout(function () {
 		//read candidate info from local description
 		var lines = pc.localDescription.sdp.split('\n');
 
-		lines.forEach(function(line){
-			if(line.indexOf('a=candidate:') === 0)
+		lines.forEach(function (line) {
+			if (line.indexOf('a=candidate:') === 0)
 				handleCandidate(line);
 		});
 	}, 1000);
