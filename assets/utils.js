@@ -24,7 +24,6 @@
 // - item: ribbonText, oldPrice
 // -disable selections, where it no needed
 //
-var IMG_1x1 = 'data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
 var _columnsCount = 12; // hardcoded in assets/grid12.css
 var _headerBarHeight = 45; // hardcoded in assets/style.css
 //

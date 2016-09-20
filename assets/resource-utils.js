@@ -1,5 +1,7 @@
 'use strict';
 //
+var IMG_1x1 = 'data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+//
 var _translationLanguages = {};
 var _translationCurrencies = {};
 var _translationOptions = {};
@@ -237,6 +239,8 @@ function getColor(colorKey, entryKey) {
 }
 
 function getImage(str) {
+	if (str === undefined)
+		return IMG_1x1;
 	if (str.startsWith('@')) {
 		var pos1 = str.indexOf('[');
 		var key, index;
