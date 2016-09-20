@@ -549,7 +549,11 @@ function redisplayMenu() {
 			separator.innerHTML = '&nbsp;•&nbsp;';
 		}
 		a.setAttribute('id', 'menu-item-a' + '.' + sectionKey);
-		a.setAttribute('onclick', 'jump("sectionAnchor.' + sectionKey + '")');
+		a.setAttribute('data-sectionkey', sectionKey);
+		a.onclick = function (event) {
+			var sectionKey = event.target.getAttribute('data-sectionkey');
+			xopen(sectionKey);
+		};
 		a.classList.add('menuLink');
 		ul.appendChild(a);
 		txt(a, section, 'name');
@@ -561,9 +565,9 @@ function redisplayMenu() {
 		byId('headerBarTop').style.display = 'block';
 }
 
-function jump(anchorId) {
+function jumpToSection(sectionKey) {
+	var anchorId = 'sectionAnchor.' + sectionKey;
 	var anchor = byId(anchorId);
-	var sectionKey = anchor['name'];
 	var checkBox = byId('checkboxShowSection.' + sectionKey);
 	if (checkBox != null) {
 		checkBox.checked = true;
@@ -610,20 +614,23 @@ function processUrlParameters() {
 		clearCart();
 	//
 	var sectionKey = _urlParams['section'];
-	var itemKey = _urlParams['item'];
-	if (sectionKey !== undefined)
+	if (sectionKey === undefined) {
+		var pos = location.href.indexOf('#');
+		if (pos != -1)
+			sectionKey = location.href.substring(pos + 1);
+	}
+	if (sectionKey !== undefined) {
+		var itemKey = _urlParams['item'];
 		xopen(sectionKey, itemKey);
-	var pos = location.href.indexOf('#');
-	if(pos != -1) {
-		sectionKey = location.href.substring(pos+1);
-		jump('sectionAnchor.' + sectionKey);
 	}
 }
 
 function xopen(sectionKey, itemKey) {
-	setSectionVisible(sectionKey, true);
+	var ok = setSectionVisible(sectionKey, true);
+	if (!ok)
+		return;
 	if (itemKey === undefined)
-		jump('sectionAnchor.' + sectionKey);
+		jumpToSection(sectionKey);
 	else {
 		var needOpen = true;
 		if (_currentThumbnailEl !== null) {
@@ -635,8 +642,8 @@ function xopen(sectionKey, itemKey) {
 		if (needOpen) {
 			var thumbnailId = 'thumbnail.' + sectionKey + '.' + itemKey;
 			var thumbnailEl = byId(thumbnailId);
-			if(thumbnailEl == null) {
-				jump('sectionAnchor.' + sectionKey);
+			if (thumbnailEl == null) {
+				jumpToSection(sectionKey);
 				return;
 			}
 			//
@@ -645,12 +652,10 @@ function xopen(sectionKey, itemKey) {
 			thumbnailEl.dispatchEvent(event);
 		}
 		//
-		//
 		var productPageId = 'productPage.' + sectionKey + '.' + itemKey;
 		var productPageEl = byId(productPageId);
-		//
-		//		productPageEl.scrollIntoView(true);
-		window.scroll(0, findPos(productPageEl));
+		if (productPageEl != null)
+			window.scroll(0, findPos(productPageEl));
 	}
 }
 
@@ -660,7 +665,7 @@ function findPos(obj) {
 		do {
 			curtop += obj.offsetTop;
 		} while (obj = obj.offsetParent);
-		return [curtop - _headerBarHeight]; // header bar height
+		return curtop - _headerBarHeight; // header bar height
 	}
 }
 
@@ -725,6 +730,8 @@ function reloadWithCurrency(currencyKey) {
 
 function setSectionVisible(sectionKey, visible) {
 	var sectionAnchorEl = byId('sectionAnchor.' + sectionKey);
+	if (sectionAnchorEl == null)
+		return false;
 	var sectionRowEl = byId('sectionRow.' + sectionKey);
 	if (visible) {
 		sectionAnchorEl.style.display = 'block';
@@ -733,6 +740,7 @@ function setSectionVisible(sectionKey, visible) {
 		sectionAnchorEl.style.display = 'none';
 		sectionRowEl.style.display = 'none';
 	}
+	return true;
 }
 
 function goSection(sectionKey, n) {
@@ -1194,8 +1202,7 @@ function createSection(sectionKey, section, customCreateThumbnail) {
 				spanNameEl.onclick = function (event) {
 					var el = event.target;
 					var sectionkey = el.getAttribute('data-sectionkey');
-					setSectionVisible(sectionkey, true);
-					jump('sectionAnchor.' + sectionkey);
+					xopen(sectionkey);
 				};
 				spanNameEl.classList.add('catalog');
 				spanNameEl.setAttribute('data-sectionkey', curSectionKey);
@@ -2333,8 +2340,6 @@ function load() {
 	redisplayMenu();
 	//
 	manageButtonsPrevNext();
-
-	//setSectionVisible('RAINCOATS', false);
 }
 
 function clickAddToCartHandler(event, itemKey, sectionKey) {
