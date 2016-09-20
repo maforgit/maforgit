@@ -32,38 +32,41 @@ limitations under the License.
 
 II DIRECTORY STRUCTURE
 ----------------------
-
-			 / [site root]
-			 |
-			 |-- /settings
-			 |   |
-			 |   |-- /custom (optional, folder (with arbitrary name) for custom files, put your stuff here)
-			 |   |
-			 |   |-- /js
-			 |   |   |
-			 |   |   |-- color_list.js
-			 |   |   |-- colors.js (colors definitions)
-			 |   |   |-- currencies_symbols.js
-			 |   |   |-- currencies.js (currencies definitions)
-			 |   |   |-- fonts.js (fonts definitions)
-			 |   |   |-- item_options_values.js
-			 |   |   |-- item_options.js
-			 |   |   |-- items.js (products definitions)
-			 |   |   |-- languages.js (languages definitions)
-			 |   |   |-- layout.js (page layout settings)
-			 |   |   |-- order_customer_details.js
-			 |   |   |-- order_options.js
-			 |   |   |-- order_store_details.js
-			 |   |   |-- payment_service_providers.js
-			 |   |   |-- resources.js (key-value storage for translated strings, icons, etc.)
-			 |   |   +-- sections.js (sections definitions)
-			 |   |
-			 |   |-- custom.less (optional, put your custom styles (css/less))
-			 |   |
-			 |   +-- images.html (optional HTML <table>-based key-value storage for custom images)
-			 |
-			 +-- index.html (distribution file, don't change!)
-
++--------------------------------------------------------------------------------------------------------------------------------------+
+| FILE                                     | TYPE       | OPTIONAL | DESCRIPTION                                                       |
++------------------------------------------+------------+----------+-------------------------------------------------------------------+
+| /                                        | DIR        |          | Site root                                                         |
+| |                                        |            |          |                                                                   |
+| |-- /settings                            | DIR        |          | Directory where all settings stored                               |
+| |   |                                    |            |          |                                                                   |
+| |   |-- /custom                          | DIR        | optional | Directory for custom files, put all your stuff here               |
+| |   |                                    |            |          |                                                                   |
+| |   |-- /js                              | DIR        |          | Directory for settings files                                      |
+| |   |   |                                |            |          |                                                                   |
+| |   |   |-- color_list.js                | JavaScript | optional | Mapping color options to HTML color or background image file)     |
+| |   |   |-- colors.js                    | JavaScript | optional | Colors definitions                                                |
+| |   |   |-- currencies_symbols.js        | JavaScript | optional | Currencies symbols definitions                                    |
+| |   |   |-- currencies.js                | JavaScript |          | Currencies definitions                                            |
+| |   |   |-- fonts.js                     | JavaScript |          | Fonts definitions                                                 |
+| |   |   |-- item_options_values.js       | JavaScript | optional | Values of item options (used in product card)                     |
+| |   |   |-- item_options.js              | JavaScript | optional | Item options (used in product card)                               |
+| |   |   |-- items.js                     | JavaScript |          | Products definitions                                              |
+| |   |   |-- languages.js                 | JavaScript |          | Languages definitions                                             |
+| |   |   |-- layout.js                    | JavaScript | optional | Page layout settings                                              |
+| |   |   |-- order_options.js             | JavaScript |          | Additional options (used in Order)                                |
+| |   |   |-- order_customer_details.js    | JavaScript |          | Customer details (used in Order)                                  |
+| |   |   |-- order_store_details.js       | JavaScript |          | Store details (used in Order)                                     |
+| |   |   |-- payment_service_providers.js | JavaScript |          | Payment service providers                                         |
+| |   |   |-- resources.js                 | JavaScript |          | Key-value storage for translated strings, icons, etc.             |
+| |   |   +-- sections.js                  | JavaScript |          | Sections definitions                                              |
+| |   |                                    |            |          |                                                                   |
+| |   |-- custom.less                      | LESS       | optional | Contains custom styles (css/less)                                 |
+| |   |                                    |            |          |                                                                   |
+| |   +-- images.html                      | HTML       | optional | Two column HTML <table>-based key-value storage for custom images |
+| |                                        |            |          |                                                                   |
+| +-- index.html                           | HTML       |          | Distribution file, don't modify!                                  |
+|                                          |            |          |                                                                   |
++--------------------------------------------------------------------------------------------------------------------------------------+
 
 III RUN LOCALLY (file:// URL)
 -----------------------------
@@ -123,6 +126,8 @@ V NAVIGATION
 	</script>
 
 	<script src="assets/less.min.js"></script>
+	<script src="assets/default_settings.js"></script>
+
 	<script src="settings/js/color_list.js"></script>
 	<script src="settings/js/layout.js"></script>
 	<script src="settings/js/colors.js"></script>

@@ -75,6 +75,12 @@ function getInlineFragments() {
 			type: 'js',
 			tag: '<script src="$"></script>',
 			replacer: '<script>$</script>'
+		},
+		//
+		'assets/default_settings.js': {
+			type: 'js',
+			tag: '<script src="$"></script>',
+			replacer: '<script>$</script>'
 		}
 		//
 	};
