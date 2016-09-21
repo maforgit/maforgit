@@ -126,24 +126,7 @@ V NAVIGATION
 	</script>
 
 	<script src="assets/less.min.js"></script>
-	<script src="assets/default_settings.js"></script>
 
-	<script src="settings/js/color_list.js"></script>
-	<script src="settings/js/layout.js"></script>
-	<script src="settings/js/colors.js"></script>
-	<script src="settings/js/fonts.js"></script>
-	<script src="settings/js/currencies.js"></script>
-	<script src="settings/js/currencies_symbols.js"></script>
-	<script src="settings/js/languages.js"></script>
-	<script src="settings/js/item_options_values.js"></script>
-	<script src="settings/js/item_options.js"></script>
-	<script src="settings/js/order_store_details.js"></script>
-	<script src="settings/js/order_customer_details.js"></script>
-	<script src="settings/js/order_options.js"></script>
-	<script src="settings/js/resources.js"></script>
-	<script src="settings/js/sections.js"></script>
-	<script src="settings/js/payment_service_providers.js"></script>
-	<script src="settings/js/items.js"></script>
 
 </head>
 
@@ -418,6 +401,41 @@ V NAVIGATION
 <script src="assets/jquery-3.0.0.min.js"></script>
 <script src="assets/common-utils.js"></script>
 <script src="assets/resource-utils.js"></script>
+
+<script src="assets/default_settings.js"></script>
+<script>
+	var _color_list = getColorList();
+	var _colors = getColors();
+	var _currencies_symbols = getCurrenciesSymbols();
+	var _layout = getLayout();
+
+</script>
+
+<script src="settings/js/color_list.js"></script>
+<script src="settings/js/colors.js"></script>
+<script src="settings/js/currencies_symbols.js"></script>
+<script src="settings/js/layout.js"></script>
+<script>
+	mergeObj(_color_list, getColorList());
+	mergeObj(_colors, getColors());
+	mergeObj(_currencies_symbols, getCurrenciesSymbols());
+	mergeObj(_layout, getLayout());
+
+</script>
+
+<script src="settings/js/fonts.js"></script>
+<script src="settings/js/currencies.js"></script>
+<script src="settings/js/languages.js"></script>
+<script src="settings/js/item_options_values.js"></script>
+<script src="settings/js/item_options.js"></script>
+<script src="settings/js/order_store_details.js"></script>
+<script src="settings/js/order_customer_details.js"></script>
+<script src="settings/js/order_options.js"></script>
+<script src="settings/js/resources.js"></script>
+<script src="settings/js/sections.js"></script>
+<script src="settings/js/payment_service_providers.js"></script>
+<script src="settings/js/items.js"></script>
+
 <script src="assets/utils.js"></script>
 <link rel="stylesheet/css" href="assets/zoom/css/magnify.css">
 <script src="assets/zoom/js/jquery.magnify.js"></script>

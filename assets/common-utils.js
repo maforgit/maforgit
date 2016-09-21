@@ -279,6 +279,15 @@ function cloneObj(obj) {
 	return ordered;
 }
 
+function mergeObj(obj, objAdd) {
+	for (var key in objAdd) {
+		if (!objAdd.hasOwnProperty(key))
+			continue;
+		var value = objAdd[key];
+		obj[key] = value;
+	}
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 (function ($) {
@@ -351,6 +360,7 @@ function saveTextAsFile(textToSave, fileNameToSaveAs, type) {
 	document.body.appendChild(a);
 	a.click();
 }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // polyfil for IE
 if (!String.prototype.startsWith) {

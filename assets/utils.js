@@ -29,16 +29,16 @@ var _headerBarHeight = 45; // hardcoded in assets/style.css
 //
 var _single_column_px;
 //
-var _color_list;
-var _colors;
+//var _color_list;
+//var _colors;
 var _fonts;
 var _currencies;
-var _currencies_symbols;
+//var _currencies_symbols;
 var _items = {};
 var _itemOptions;
 var _itemOptionValues;
 var _languages;
-var _layout;
+//var _layout;
 var _payment_service_providers;
 var _resources;
 var _sections;
@@ -2247,14 +2247,14 @@ _headerImageEl = byId('headerImage');
 _headerImageEl.src = getImage(_resources['headerImage']);
 //
 /* Load settings data */
-_color_list = getColorList();
-_colors = getColors();
+//_color_list = getColorList();
+//_colors = getColors();
 _currencies = getCurrencies();
-_currencies_symbols = getCurrenciesSymbols();
+//_currencies_symbols = getCurrenciesSymbols();
 _itemOptions = getItemOptions();
 _itemOptionValues = getItemOptionsValues();
 _languages = getLanguages();
-_layout = getLayout();
+//_layout = getLayout();
 _payment_service_providers = getPayment_service_providers();
 _sections = getSections();
 _orderStoreDetails = getOrderStoreDetails();
