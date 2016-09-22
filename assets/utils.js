@@ -24,21 +24,17 @@
 // - item: ribbonText, oldPrice
 // -disable selections, where it no needed
 //
-var _columnsCount = 12; // hardcoded in assets/grid12.css
-var _headerBarHeight = 45; // hardcoded in assets/style.css
+var _columnsCount = 12; // hardcoded in assets/grid12.less
+var _headerBarHeight = 45; // hardcoded in assets/style.less
 //
 var _single_column_px;
 //
-//var _color_list;
-//var _colors;
 var _fonts;
 var _currencies;
-//var _currencies_symbols;
 var _items = {};
 var _itemOptions;
 var _itemOptionValues;
 var _languages;
-//var _layout;
 var _payment_service_providers;
 var _resources;
 var _sections;
@@ -716,7 +712,7 @@ function reloadWithLang(langKey) {
 	setLang(langKey);
 	updateTextAll();
 	redisplayCartItems();
-	window.dispatchEvent(new Event('resize'));
+	fireResizeEvent();
 }
 
 function reloadWithCurrency(currencyKey) {
@@ -735,6 +731,8 @@ function setSectionVisible(sectionKey, visible) {
 	if (visible) {
 		sectionAnchorEl.style.display = 'block';
 		sectionRowEl.style.display = 'block';
+		fireResizeEvent();
+
 	} else {
 		sectionAnchorEl.style.display = 'none';
 		sectionRowEl.style.display = 'none';
@@ -2222,8 +2220,8 @@ function displayAboutComment(d) {
 		return;
 	if (d.nodeType == 8) {
 		var el = document.createElement('pre');
-		el.setAttribute('style', 'tab-size:4; -moz-tab-size:4;');
-		el.innerHTML = d.data;
+		el.setAttribute('style', 'margin-left: 50px; tab-size:4; -moz-tab-size:4;');
+		el.textContent = d.data;
 		var body = document.getElementsByTagName("html")[0];
 		body.innerHTML = '';
 		body.appendChild(el);
@@ -2247,14 +2245,10 @@ _headerImageEl = byId('headerImage');
 _headerImageEl.src = getImage(_resources['headerImage']);
 //
 /* Load settings data */
-//_color_list = getColorList();
-//_colors = getColors();
 _currencies = getCurrencies();
-//_currencies_symbols = getCurrenciesSymbols();
 _itemOptions = getItemOptions();
 _itemOptionValues = getItemOptionsValues();
 _languages = getLanguages();
-//_layout = getLayout();
 _payment_service_providers = getPayment_service_providers();
 _sections = getSections();
 _orderStoreDetails = getOrderStoreDetails();
@@ -2267,12 +2261,10 @@ addEventListener('click', function (event) {
 
 addEventListener("scroll", function (event) {
 	updateMenu();
-	//closeColorWindow();
 }, false);
 addEventListener("resize", function (event) {
 	updateMenu();
 	posColorWindow();
-	//closeColorWindow();
 }, false);
 
 //
@@ -2281,7 +2273,7 @@ window.onload = function () {
 	var loading = byId('loading');
 	loading.style.display = 'none';
 	site.style.display = 'block';
-	window.dispatchEvent(new Event('resize'));
+	fireResizeEvent();
 };
 //
 document.onkeydown = function (event) {

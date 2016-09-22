@@ -39,20 +39,20 @@ II DIRECTORY STRUCTURE
 | |                                        |            |          |                                                                   |
 | |-- /settings                            | DIR        |          | Directory where all settings stored                               |
 | |   |                                    |            |          |                                                                   |
-| |   |-- /custom                          | DIR        | optional | Directory for custom files, put all your stuff here               |
+| |   |-- /custom                          | DIR        | yes      | Directory for custom files, put all your stuff here               |
 | |   |                                    |            |          |                                                                   |
 | |   |-- /js                              | DIR        |          | Directory for settings files                                      |
 | |   |   |                                |            |          |                                                                   |
-| |   |   |-- color_list.js                | JavaScript | optional | Mapping color options to HTML color or background image file)     |
-| |   |   |-- colors.js                    | JavaScript | optional | Colors definitions                                                |
-| |   |   |-- currencies_symbols.js        | JavaScript | optional | Currencies symbols definitions                                    |
+| |   |   |-- color_list.js                | JavaScript | yes      | Mapping color options to HTML color or background image file)     |
+| |   |   |-- colors.js                    | JavaScript | yes      | Colors definitions                                                |
+| |   |   |-- currencies_symbols.js        | JavaScript | yes      | Currencies symbols definitions                                    |
 | |   |   |-- currencies.js                | JavaScript |          | Currencies definitions                                            |
 | |   |   |-- fonts.js                     | JavaScript |          | Fonts definitions                                                 |
-| |   |   |-- item_options_values.js       | JavaScript | optional | Values of item options (used in product card)                     |
-| |   |   |-- item_options.js              | JavaScript | optional | Item options (used in product card)                               |
+| |   |   |-- item_options_values.js       | JavaScript | yes      | Values of item options (used in product card)                     |
+| |   |   |-- item_options.js              | JavaScript | yes      | Item options (used in product card)                               |
 | |   |   |-- items.js                     | JavaScript |          | Products definitions                                              |
 | |   |   |-- languages.js                 | JavaScript |          | Languages definitions                                             |
-| |   |   |-- layout.js                    | JavaScript | optional | Page layout settings                                              |
+| |   |   |-- layout.js                    | JavaScript | yes      | Page layout settings                                              |
 | |   |   |-- order_options.js             | JavaScript |          | Additional options (used in Order)                                |
 | |   |   |-- order_customer_details.js    | JavaScript |          | Customer details (used in Order)                                  |
 | |   |   |-- order_store_details.js       | JavaScript |          | Store details (used in Order)                                     |
@@ -60,9 +60,9 @@ II DIRECTORY STRUCTURE
 | |   |   |-- resources.js                 | JavaScript |          | Key-value storage for translated strings, icons, etc.             |
 | |   |   +-- sections.js                  | JavaScript |          | Sections definitions                                              |
 | |   |                                    |            |          |                                                                   |
-| |   |-- custom.less                      | LESS       | optional | Contains custom styles (css/less)                                 |
+| |   |-- custom.less                      | LESS       | yes      | Contains custom styles (css/less)                                 |
 | |   |                                    |            |          |                                                                   |
-| |   +-- images.html                      | HTML       | optional | Two column HTML <table>-based key-value storage for custom images |
+| |   +-- images.html                      | HTML       | yes      | Two column HTML <table>-based key-value storage for custom images |
 | |                                        |            |          |                                                                   |
 | +-- index.html                           | HTML       |          | Distribution file, don't modify!                                  |
 |                                          |            |          |                                                                   |
@@ -80,7 +80,7 @@ To run locally you need to change local files security policy:
 
 #Chrome:
 
-1) Close all running Chrome instances first.
+1) Close all running Chrome instances.
 2) Start the Chrome executable with a command line flag:
 
 chrome --allow-file-access-from-files
@@ -126,8 +126,6 @@ V NAVIGATION
 	</script>
 
 	<script src="assets/less.min.js"></script>
-
-
 </head>
 
 <body onresize="onResizeHandler()">

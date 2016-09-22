@@ -36,7 +36,8 @@ function getItems() {
 				},
 				"ostatok" : "251"
 			},
-			addToCartDefaultCount : 10
+			addToCartDefaultCount : 10,
+			ribbonLeft: "-10%"
 		},
 		"ART-1021" : {
 			"name" : {
@@ -121,7 +122,8 @@ function getItems() {
 				"ostatok" : "251"
 			},
 			"minCount" : 0,
-			"maxCount" : 1251
+			"maxCount" : 1251,
+			ribbonRight: "NEW"
 		},
 		"ART-1022" : {
 			"name" : "ПЛАЩ",
@@ -186,7 +188,8 @@ function getItems() {
 				"ostatok" : "220"
 			},
 			"minCount" : 0,
-			"maxCount" : 1251
+			"maxCount" : 1251,
+			stamp: "SOLD"
 		},
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		"ART-1023" : {

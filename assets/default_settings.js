@@ -189,11 +189,11 @@ function getColors() {
 		"itemBarBadgeBackground": "Orange",
 		"itemBarBadgeColor": "Black",
 		//
-		"ribbonLeftBackground": "Green",
+		"ribbonLeftBackground": "#759564",
 		"ribbonLeftColor": "White",
 		//
-		"ribbonRightBackground": "magenta",
-		"ribbonRightColor": "Black",
+		"ribbonRightBackground": "#EE3233",
+		"ribbonRightColor": "White",
 		"itemBarCartColor": "#EEE",
 		"itemBarCartColorHover": "White",
 		"itemBarArrowColor": "Black"
@@ -208,7 +208,7 @@ function getCurrenciesSymbols() {
 	return {
 		"USD": "$",
 		"EUR": "€",
-		"RUB": "руб.",
+		"RUB": "руб.", // ₽
 		"NIS": "₪"
 	};
 }
@@ -219,7 +219,7 @@ layout.js
 function getLayout() {
 	'use strict';
 	return {
-		"colSpan": 4,
+		"colSpan": 4, // Products grid column count: 12 - one column; 6 two columns; 4 - three columns; 3 - four columns; 2 - six columns; 1 - twelve columns.
 		"verticalGapPx": 25,
 		"multiColumnMaxWidthPx": 1170,
 		"singleColumnMaxWidthPx": 768,

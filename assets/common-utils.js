@@ -8,6 +8,10 @@ function byTag(tag) {
 	return document.getElementsByTagName(tag);
 }
 
+function fireResizeEvent() {
+	window.dispatchEvent(new Event('resize'));
+}
+
 function loadImage(imageEl, src) {
 	var image = new Image();
 	image.onload = function () {
