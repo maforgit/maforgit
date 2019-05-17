@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script type="text/javascript" src="qrcode.min.js"></script>
+	<link rel="shortcut icon"type="image/x-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAACmAAAApgHdff84AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAg1QTFRF////////////////////4+Pj6+vr7+/v8fHx8vLy8/Pz6enp6urq7e3t7e3t6+vr7Ozs7+/v6+vr7e3t7u7u7u7u7u7u6+vr7Ozs7Ozs7u7u7Ozs7e3t7e3t7u7u7Ozs7Ozs7u7u7Ozs7Ozs7Ozs7e3t7e3t7e3t7e3t7e3t7e3t7u7u7e3t7Ozs7e3t7e3t7Ozs7e3t7u7u7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7Ozs7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3tVc1sV85uWc5vWs9xXM5yXM9yXc9zXs90YM92YNB1YdB2ZtJ6atF+atJ+a9J/bNR/bdKAbtSBb9KCcNODcNWDcdWEd9eKeNeKedWKedWLediLe9WMe9iNfNWNf9aQgdaRgtaShNeUhdeVhduWiNiYitiZi9iai92bjtmcj9mdkt+hmdumnOKpneKqpeSxqOW0qd+zqt+0q9+1rOa4rd+2reC3ruC4rue5r+C4r+e6seC6suG7uerCuuLBvOvFvuvGvuzHv+PGwOPHwOzJxO3Mxu7NyOXOyeXPzebS0OfU0PHW0efV0ufW2Onb2PPd2enc2fPe2/Tg3erf3vXi3+rh4Ori4vbm7O3s7e3t7/rx8Pry9/z4+v37/P38/f79/v7+tUCITQAAAE90Uk5TAAEDBQYJDRASFBUXGBwdJykxQEhJTE1OT1JYXmFkZmttdXl6e31+gIGCg4SNlpieo6uxtLa4urzCxcfIydHX4OTn6ert7vDx8vb3+fr7/KeAwJYAAAFzSURBVBgZVcGHQ01xAAXgIyllVMimIaNFyk57kF5OGlS8iCQrISQtCpUkkYQWusfq9ze6vW63+j44Vm3cm5KVmbx7QxAW848vkqMw2g+usDRZnzofXa550jUinQyFI8Kj8Vt03JvSmW3wCfOou5Su870qCIHNP00vuUSfUv0AxOtbKflsoJLzyse1C1hdZN0gHxjTTle9VbgSmzRMctKYXyV0DWs9YtVBcswYU0dXh/bgkJpIvjOmhwualIIceUlemzGtXOBVNnLkpe2t+VNL11Vl4IQaaDs3an7fJq+8qqatWQeRpBbOKpswM0PXp82/j2Vkt6KwXV/oU/HB+PytIke0DivydIdzHn83tjayUacDgAS957ybL948LeaFH9oJIEa9XKpfh2E7podcrLJf+WsABHisS43PB+/Scf+n8sNh2yzLku1rS8PFmubXn6WjazErUTqbGrcvS46CyGXwObJ/SyCA5VsPHM89lZ68Ixhz/gMJbcAqSL4HkwAAAABJRU5ErkJggg==">
+    <title></title>
+	<style>
+	.container {
+		display: flex;
+		justify-content: center;
+	}
+	.content {
+		position: relative;
+		222display: flex;
+		222align-items: center;
+		222flex-direction: column;
+	}
+	.image {
+		  width: 100%;
+		  max-width: 800px;
+		  height: auto;
+	}
+	.name {
+		222border: 2px solid lightgray;
+		max-width: 100%;
+		min-width: 10px;
+	}
+	.text {
+	}
+	.phone {
+		text-decoration: none;
+		cursor: pointer;
+	}
+	.qrcode {
+		max-width: fit-content;
+		padding: 10px;
+		border-radius: 5px;
+		border: 2px solid green;
+		cursor: pointer;
+	}
+
+	.input[contenteditable="true"] {
+		outline: 0 solid transparent;
+		border: 1px dashed;
+	}
+
+	.input[contenteditable="true"]:focus {
+	   border: 1px solid;
+	}
+
+[contenteditable="true"] {
+    white-space: nowrap;
+    overflow: hidden;
+}
+[contenteditable="true"] br {
+    display:none;
+
+}
+[contenteditable="true"] * {
+    display:inline;
+    white-space:nowrap;
+}
+
+	</style>
+  </head>
+  <body>
+<!--
+<div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+		<div class="name" contenteditable="true"></div>
+		<div class="text" contenteditable="true"></div>
+		<a class="phone" contenteditable="true"></a>
+		<div class="qrcode"></div>
+		<img class="img">
+-->
+<div class="container">
+	<div class="content">
+		<img src="bg1920x1280.jpg" class="image">
+<button onclick="tog()">Edit</button>
+	</div>
+</div>
+<script>
+	var _FIELDS = {
+		name: {
+			title: true,
+			text: "John Doe",
+			color: "#000",
+			fontFamily: "Monospace",
+			fontSize: '2em',
+			top: '2em',
+			left: '2em',
+		},
+		text: {
+			text: "My Text",
+			color: "#000",
+			fontFamily: "Monospace",
+			fontSize: '2em',
+			top: '20em',
+			left: '20em',
+		},
+	};
+</script>
+	<script>
+		var edit = false;
+		function tog() {
+			if (edit) {
+				edit = false;
+				Object.keys(_FIELDS).forEach(fieldName => {
+					let fieldObj = _FIELDS[fieldName];
+					let fieldEl = document.getElementById(fieldName);
+					fieldEl.style.borderColor = 'transparent';
+					fieldEl.setAttribute('contenteditable', 'false');
+					fieldEl.innerHTML = decodeURIComponent(fieldEl.textContent);
+					if (fieldObj['title'])
+						titleFieldEl = fieldEl;
+				});
+				updateLink(parentEl, titleFieldEl, true);
+			} else {
+				edit = true;
+				let first = true;
+				Object.keys(_FIELDS).forEach(fieldName => {
+					let fieldObj = _FIELDS[fieldName];
+					let fieldEl = document.getElementById(fieldName);
+					fieldEl.style.borderColor = fieldObj['color'];
+					fieldEl.setAttribute('contenteditable', 'true');
+					fieldEl.textContent = fieldEl.innerHTML;
+					if (fieldObj['title'])
+						titleFieldEl = fieldEl;
+					if (first) {
+						first = false;
+						fieldEl.click();
+						fieldEl.focus();
+					}
+				});
+			}
+			document.querySelector('button').textContent = edit ? 'Save' : 'Edit';
+		}
+		function generate(parentEl) {
+			var url = new URL(window.location.href);
+			//
+			let titleFieldEl;
+			Object.keys(_FIELDS).forEach(fieldName => {
+				let fieldEl = document.createElement('div');
+				fieldEl.setAttribute('id', fieldName);
+				//fieldEl.setAttribute('contenteditable', 'true');
+				let fieldObj = _FIELDS[fieldName];
+				fieldEl.classList.add('input');
+				fieldEl.style.borderColor = 'transparent';
+//				fieldEl.style.outlineColor = fieldObj['color'];
+				fieldEl.style.position = 'absolute';
+				fieldEl.style.top = fieldObj['top'];
+				fieldEl.style.left = fieldObj['left'];
+				fieldEl.style.bottom = fieldObj['bottom'];
+				fieldEl.style.right = fieldObj['right'];
+				fieldEl.style.color = fieldObj['color'];
+				fieldEl.style.fontFamily = fieldObj['fontFamily'];
+				fieldEl.style.fontSize = fieldObj['fontSize'];
+				fieldEl.style.fontWeight = fieldObj['fontWeight'];
+
+
+
+
+				fieldEl.addEventListener('input', e => {
+					updateLink(parentEl, titleFieldEl, false);
+				});
+				var text = url.searchParams.get(fieldName);
+				if (text === null)
+					text = fieldObj['text'];
+				if (fieldObj['title'])
+					titleFieldEl = fieldEl;
+				//if (edit)
+				//	fieldEl.textContent = text;
+				//else {
+//					alert(decodeURIComponent(text));
+					fieldEl.innerHTML = text;
+				//}
+				parentEl.appendChild(fieldEl);
+			});
+			updateLink(parentEl, titleFieldEl, false);
+		}
+
+		function getType(s) {
+			s = s.toUpperCase();
+			if (s.endsWith('.PNG'))
+				return 'PNG';
+			if (s.endsWith('.GIF'))
+				return 'GIF';
+			if (s.endsWith('.SVG'))
+				return 'SVG';
+			return 'JPEG';
+		}
+
+function escape_HTML(html_str) {
+    'use strict';
+
+    return html_str.replace(/[&<>"]/g, function (tag) {
+		var chars_to_replace = {
+            '&': '&',
+            '<': '<',
+            '>': '>',
+            '"': '"'
+        };
+		return chars_to_replace[tag] || tag;
+	});
+}
+
+function replaceAll(s, search, replacement) {
+    return s.split(search).join(replacement);
+}
+		function download(filename, text) {
+		  var el = document.createElement('a');
+		  el.setAttribute('href', 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text));
+		  el.setAttribute('download', filename);
+		  el.click();
+		}
+
+		function updateLink(parentEl, titleFieldEl, updateAddressBar) {
+			let s = 'file:///home/qsecofr/Desktop/TINY/app/t.html';
+			let title;
+			let first = true;
+			Object.keys(_FIELDS).forEach(fieldName => {
+				let fieldEl = document.getElementById(fieldName);
+				let text = fieldEl.innerHTML;
+				if (fieldEl == titleFieldEl)
+					title = text;
+				if (text != '') {
+					if (first) {
+						first = false;
+						s += '?';
+					} else
+						s += '&';
+//text = replaceAll(text, '<div>', '&lt;br&gt;');
+//text = replaceAll(text, '</div>', '');
+//alert(text);
+					s += fieldName + '=' + text;
+//alert(text);
+//fieldEl.innerHTML = text;
+				}
+			});
+//alert(s);
+			if (!first) {
+				title = new DOMParser().parseFromString(title, 'text/html').body.textContent;
+title = new DOMParser().parseFromString(title, 'text/html').body.textContent;
+				document.title = title;
+				if (updateAddressBar)
+					window.history.pushState("object or string", "Title", s);
+			}
+		}
+
+		function updateLink2222() {
+			let s = 'file:///home/qsecofr/Desktop/TINY/app/t.html';
+			let first = true;
+			let name = nameEl.textContent.trim();
+			if (name != '') {
+				if (first) {
+					first = false;
+					s += '?';
+				} else
+					s += '&';
+				s += 'name=' + name;
+			}
+			//
+			let text = textEl.textContent.trim();
+			if (text != '') {
+				if (first) {
+					first = false;
+					s += '?';
+				} else
+					s += '&';
+				s += 'text=' + text;
+			}
+			//
+			let tel = telEl.textContent.trim();
+			if (tel != '') {
+				if (first) {
+					first = false;
+					s += '?';
+				} else
+					s += '&';
+				s += 'tel=' + tel;
+			}
+			//
+//s += u;
+			//
+			if (!first) {
+				document.title = name;
+				window.history.pushState("object or string", "Title", s);
+			}
+		}
+		//
+		let parentEl = document.querySelector('.content');
+		generate(parentEl);
+		//
+
+		/*
+		var url = new URL(window.location.href);
+		//
+		var u = url.searchParams.get("u");
+		var name = url.searchParams.get("name");
+
+		var text = url.searchParams.get("text");
+		var tel = url.searchParams.get("tel");
+		//
+		let nameEl = document.querySelector('.name');
+		let textEl = document.querySelector('.text');
+		let telEl = document.querySelector('.phone');
+		let qrcodeEl = document.querySelector('.qrcode');
+		let imgEl = document.querySelector('.img');
+		imgEl.src = u;
+		//
+		let parentEl = document.querySelector('.content');
+		generate(parentEl);
+		//
+		document.title = name;
+		nameEl.innerHTML = name;
+		textEl.innerHTML = text;
+		telEl.innerHTML = tel;
+		telEl.href = 'tel:' + tel;
+		//
+let photo_url = '';
+		let vcf = 'BEGIN:VCARD\nVERSION:2.1\nN:' + name + '\nORG:' + text + '\nTEL:' + tel + '\nPHOTO;' + getType(photo_url) + ':' + photo_url + '\nEND:VCARD';
+		new QRCode(qrcodeEl, {
+			text: vcf,
+			width: 128,
+			height: 128,
+			colorDark : "#000000",
+			colorLight : "#ffffff",
+			correctLevel : QRCode.CorrectLevel.L
+		});
+		qrcodeEl.title = "Add to contacts";
+		qrcodeEl.addEventListener('click', e => {
+			download('vcard.vcf', vcf);
+		});
+
+		nameEl.addEventListener('input', e => {
+			updateLink();
+		});
+*/
+	</script>
+  </body>
+</html>
