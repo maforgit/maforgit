@@ -137,6 +137,7 @@ TODO
             document.title = originalTitle;
             //
             let text = document.documentElement.outerHTML;
+/*
             var el = document.createElement('a');
             document.body.appendChild(el);
             el.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(text));
@@ -144,14 +145,14 @@ TODO
             el.click();
             document.title = savedTitle;
             document.body.removeChild(el);
-
+*/
 			//
-			let owner = 'maforgit';
-			let token = '8b5c0c7e7406cb4f71981c207693b74c4e55b54e';
-			let callback = reqListener;
-
-			save(pathName, text, callback, owner, token);
-
+			let token = window.prompt("Token");
+            if (token !== null) {
+				let owner = 'maforgit';
+				let callback = reqListener;
+				save(pathName, text, callback, owner, token);
+			}
 
         }
 
