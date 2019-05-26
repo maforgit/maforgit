@@ -58,7 +58,7 @@
         	var el = document.createElement('a');
             document.body.appendChild(el);
             el.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(text));
-            el.setAttribute('download', filename);
+            el.setAttribute('download', fileName);
             el.click();
             document.title = savedTitle;
             document.body.removeChild(el);
@@ -275,7 +275,6 @@
         	host = host.split(':')[0];
         	let pos = host.indexOf('.');
         	let domain = host.substring(pos + 1);
-        	alert( domain);
 			if (domain == 'github.io') {
 	            let menuLiSaveOnGithubEl = document.createElement('li');
 	            menuLiSaveOnGithubEl.classList.add('menu-option');
