@@ -126,10 +126,7 @@
 
     <script>
         "use strict";
-        //
-        let url = window.location.href;
-        let fileName = url.split('#').shift().split('?').shift().split('/').pop();
-		let pathName = window.location.pathname.substring(1);
+        //		
         let sr = window.location.search;
         //var edit = sr.endsWith('&') || (sr == '');
 
@@ -143,7 +140,7 @@
         var titleEl = document.querySelector('title[data-editable]');
 		let favliconEl = document.querySelector('link[data-editable]');
 
-        function download(filename) {
+        function getText() {
             fieldEls.forEach(fieldEl => {
                 fieldEl.removeAttribute('contenteditable');
             });
@@ -152,24 +149,46 @@
             titleEl.textContent = originalTitle;
             document.title = originalTitle;
             //
-            let text = document.documentElement.outerHTML;
-/*
-            var el = document.createElement('a');
+            return document.documentElement.outerHTML;
+        }
+
+        function saveOnGithub() {
+            let text = getText();
+        	//
+        	let host = window.location.host;
+        	host = host.split(':')[0];
+        	//
+        	let owner = host.split('.')[0];
+        	let pos = host.indexOf('.');
+        	let domain = host.substring(pos + 1);
+        	//
+        	let pathName = window.location.pathname;
+        	if (pathName !== '')
+        		pathName = pathName.substring(1);
+			if (pathName === '')
+				pathName = 'index.html';
+			//
+        	let token = window.prompt("Token");
+            if (token !== null) {
+				let callback = reqListener;
+				sendToGithub(pathName, text, callback, owner, token);
+			}
+        }
+
+        function saveLocally() {
+        	let text = getText();
+        	//
+            let fileName = window.location.pathname.split('/').pop();
+    		if (fileName === '')
+    			fileName = 'index.html';
+        	//
+        	var el = document.createElement('a');
             document.body.appendChild(el);
             el.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(text));
             el.setAttribute('download', filename);
             el.click();
             document.title = savedTitle;
             document.body.removeChild(el);
-*/
-			//
-			let token = window.prompt("Token");
-            if (token !== null) {
-				let owner = 'maforgit';
-				let callback = reqListener;
-				save(pathName, text, callback, owner, token);
-			}
-
         }
 
         function init() {
@@ -182,7 +201,7 @@
                     if (window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) {
                         e.preventDefault();
                         if (e.keyCode == 83) { // Ctrl + S
-                            download(fileName);
+                        	saveLocally();
                         }
                     }
                 }, false);
@@ -379,12 +398,28 @@
                 menuUlEl.appendChild(menuLiFaviconEl);
             }
             //
+        	let host = window.location.host;
+        	host = host.split(':')[0];
+        	let pos = host.indexOf('.');
+        	let domain = host.substring(pos + 1);
+        	alert(domain);
+			if (domain == 'github.io') {
+	            let menuLiSaveOnGithubEl = document.createElement('li');
+	            menuLiSaveOnGithubEl.classList.add('menu-option');
+	            menuLiSaveOnGithubEl.innerHTML = 'Save on Github';
+	            menuLiSaveOnGithubEl.addEventListener("click", event => {
+	                toggleMenu("hide");
+	                saveOnGithub();
+	            });
+	            menuUlEl.appendChild(menuLiSaveOnGithubEl);
+			}
+        	//
             let menuLiSaveEl = document.createElement('li');
             menuLiSaveEl.classList.add('menu-option');
-            menuLiSaveEl.innerHTML = 'Save (Ctrl + S)';
+            menuLiSaveEl.innerHTML = 'Save locally (Ctrl + S)';
             menuLiSaveEl.addEventListener("click", event => {
                 toggleMenu("hide");
-                download(fileName);
+                saveLocally();
             });
             menuUlEl.appendChild(menuLiSaveEl);
             //
@@ -471,7 +506,7 @@
             return s;
         }
 
-function save(file, text, callback, owner, token) {
+function sendToGithub(file, text, callback, owner, token) {
 	let repo = owner + '/' + owner + '.github.io';
 	let url = 'https://api.github.com/repos/' + repo + '/contents/' + file;
 	//
