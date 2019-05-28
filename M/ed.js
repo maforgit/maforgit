@@ -652,6 +652,12 @@
             return s;
         }
 
+        function btoaUTF16 (sString) {
+        	var aUTF16CodeUnits = new Uint16Array(sString.length);
+        	Array.prototype.forEach.call(aUTF16CodeUnits, function (el, idx, arr) { arr[idx] = sString.charCodeAt(idx); });
+        	return btoa(String.fromCharCode.apply(null, new Uint8Array(aUTF16CodeUnits.buffer)));
+        }
+        
 function sendToGithub(file, text, callback, owner, token) {
 	let repo = owner + '/' + owner + '.github.io';
 	let url = 'https://api.github.com/repos/' + repo + '/contents/' + file;
@@ -662,7 +668,7 @@ function sendToGithub(file, text, callback, owner, token) {
 			"name": "WYSIWYG editor",
 			"email": "WYSIWYG editor"
 			},
-		"content": Base64.encode(text)
+		"content": btoaUTF16(text)
 	};
 //btoa
 	var oReq = new XMLHttpRequest();
@@ -680,6 +686,7 @@ function sendToGithub(file, text, callback, owner, token) {
 	oReq.setRequestHeader('Authorization', 'token ' + token);
 	oReq.send();
 }
+
 
 function reqListener () {
   console.log(this.responseText);
